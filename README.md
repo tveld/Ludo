@@ -1,8 +1,8 @@
 # CIS 350 Project - Sorry Boardgame
-## by Troy, Adam, and Katelyn
+### by Troy, Adam, and Katelyn
 
-# Overview
+## Overview
 This is a Java application that simulates the Sorry board game.
 
-# Release 1
-# Release 2
+## Release 1
+## Release 2
