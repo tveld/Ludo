@@ -1,0 +1,5 @@
+package ludo;
+
+class BoardSquare {
+
+}
