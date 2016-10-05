@@ -1,30 +1,29 @@
 package ludo;
 
 public class GamePiece {
-	private PlayerColors player;
-	private Position position;
-	
-	public GamePiece(PlayerColors pPlayerColor) {
-		player = pPlayerColor;
-		position = new Position();
-	}
+  private PlayerColors player;
+  private Position position;
 
-	public Position getPosition() {
-		return position;
-	}
+  public GamePiece(PlayerColors pPlayerColor) {
+    player = pPlayerColor;
+    position = new Position();
+  }
 
-	public void setPosition(int pX, int pY) {
-		position.setX(pX);
-		position.setY(pY);
-	}
+  public Position getPosition() {
+    return position;
+  }
 
-	public PlayerColors getPlayer() {
-		return player;
-	}
+  public void setPosition(int pX, int pY) {
+    position.setX(pX);
+    position.setY(pY);
+  }
 
-	public void setPlayer(PlayerColors player) {
-		this.player = player;
-	}
-	
-	
+  public PlayerColors getPlayer() {
+    return player;
+  }
+
+  public void setPlayer(PlayerColors player) {
+    this.player = player;
+  }
+
 }
