@@ -2,28 +2,35 @@ package ludo;
 
 class BoardSquare {
 	private BoardSquareType squareType;
-	private Players playersAllowed;
-	private int positionX;
-	private int positionY;
+	private PlayerColors playersAllowed;
+	private GamePiece gamePiece;
+	private Position position;
 	
 	public BoardSquare() {
 		squareType = BoardSquareType.REGULAR;
-		playersAllowed = Players.ALL;
+		playersAllowed = PlayerColors.ALL;
+		gamePiece = null;
+		position = new Position();
 	}
 	
-	public BoardSquare (BoardSquareType pSquareType, Players pPlayersAllowed){
+	public BoardSquare (BoardSquareType pSquareType, PlayerColors pPlayersAllowed){
 		squareType = pSquareType;
 		playersAllowed = pPlayersAllowed;
 	}
 	
-	public void setPosition (int x, int y) {
-		positionX = x;
-		positionY = y;
+	public void setPosition (int pX, int pY) {
+		position.setX(pX);
+		position.setY(pY);
 	}
 	
-	public void setBoardTypeAndPlayer(BoardSquareType pType, Players pPlayers){
+	public Position getPosition() {
+		return position;
+	}
+	
+	public void setBoardSquare(BoardSquareType pType, PlayerColors pPlayers, GamePiece pGamePiece){
 		squareType = pType;
 		playersAllowed = pPlayers;
+		gamePiece = pGamePiece;
 	}
 
 	public BoardSquareType getSquareType() {
@@ -34,28 +41,19 @@ class BoardSquare {
 		this.squareType = squareType;
 	}
 
-	public Players getPlayersAllowed() {
+	public PlayerColors getPlayersAllowed() {
 		return playersAllowed;
 	}
 
-	public void setPlayersAllowed(Players playersAllowed) {
+	public void setPlayersAllowed(PlayerColors playersAllowed) {
 		this.playersAllowed = playersAllowed;
 	}
 
-	public int getPositionX() {
-		return positionX;
+	public GamePiece getGamePiece() {
+		return gamePiece;
 	}
 
-	public void setPositionX(int positionX) {
-		this.positionX = positionX;
+	public void setGamePiece(GamePiece gamePiece) {
+		this.gamePiece = gamePiece;
 	}
-
-	public int getPositionY() {
-		return positionY;
-	}
-
-	public void setPositionY(int positionY) {
-		this.positionY = positionY;
-	}
-
 }
