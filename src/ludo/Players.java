@@ -1,6 +1,6 @@
 package ludo;
 
 public enum Players {
-	RED, YELLOW, GREEN, BLUE, ANY;
+	RED, YELLOW, GREEN, BLUE, ALL;
 
 }
