@@ -1,8 +1,11 @@
-package ludo;
+package ludo.view;
+
+import java.awt.Color;
 
 public class Position {
   private int x;
   private int y;
+  private Color color;
 
   public Position() {
     x = y = -1;
