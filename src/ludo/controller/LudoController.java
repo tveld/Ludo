@@ -9,5 +9,7 @@ public class LudoController {
 
 	public static void main(String[] args) {
 		LudoModel lmodel = new LudoModel();
+		LudoView lview = new LudoView();
+		lview.printBoard(lmodel);
 	}
 }

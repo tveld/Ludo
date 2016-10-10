@@ -6,28 +6,12 @@ public class LudoModel {
 	/**
 	 * The size of the board array in the model.
 	 */
-	private final int BOARD_SIZE = 52;
-	/**
-	 * A constant representing the red player's index.
-	 */
-	private final int RED = 0;
-	/**
-	 * A constant representing the blue player's index.
-	 */
-	private final int BLUE = 1;
-	/**
-	 * A constant representing the green player's index.
-	 */
-	private final int GREEN = 2;
-	/**
-	 * A constant representing the yellow player's index.
-	 */
-	private final int YELLOW = 3;
+	private static final int BOARD_SIZE = 52;
 
 	private int currentPlayer;
 
-	private static final int[] START_POSITIONS = { 0, 13, 26, 39 };
-	private static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
+	public static final int[] START_POSITIONS = { 0, 13, 26, 39 };
+	public static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
 
 	Random rand;
 
@@ -38,33 +22,34 @@ public class LudoModel {
 		rand = new Random();
 
 		playerList = new Player[4];
-		playerList[RED] = new Player(RED, PlayerColors.RED);
-		playerList[BLUE] = new Player(BLUE, PlayerColors.BLUE);
-		playerList[GREEN] = new Player(GREEN, PlayerColors.GREEN);
-		playerList[GREEN] = new Player(GREEN, PlayerColors.GREEN);
-		playerList[YELLOW] = new Player(YELLOW, PlayerColors.YELLOW);
+		playerList[Player.RED] = new Player(Player.RED);
+		playerList[Player.BLUE] = new Player(Player.BLUE);
+		playerList[Player.GREEN] = new Player(Player.GREEN);
+		playerList[Player.YELLOW] = new Player(Player.YELLOW);
 
 		setUpBoard();
 
-		currentPlayer = RED;
+		currentPlayer = Player.RED;
 	}
 
 	public void setUpBoard() {
 		board = new BoardSquare[BOARD_SIZE];
 
 		for (int i = 0; i < BOARD_SIZE; i++) {
-			board[i] = new BoardSquare(BoardSquareType.REGULAR, PlayerColors.ALL, i);
+			board[i] = new BoardSquare(BoardSquare.REGULAR, Player.ALL, i);
 		}
 
-		board[START_POSITIONS[RED]].setSquareType(BoardSquareType.START_POSITION);
-		board[START_POSITIONS[BLUE]].setSquareType(BoardSquareType.START_POSITION);
-		board[START_POSITIONS[GREEN]].setSquareType(BoardSquareType.START_POSITION);
-		board[START_POSITIONS[YELLOW]].setSquareType(BoardSquareType.START_POSITION);
+		board[START_POSITIONS[Player.RED]].setSquareType(BoardSquare.START_POSITION);
+		board[START_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.START_POSITION);
+		board[START_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.START_POSITION);
+		board[START_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.START_POSITION);
 
-		board[SAFE_ADJACENT_POSITIONS[RED]].setSquareType(BoardSquareType.SAFE_ADJACENT, PlayerColors.RED);
-		board[SAFE_ADJACENT_POSITIONS[BLUE]].setSquareType(BoardSquareType.SAFE_ADJACENT, PlayerColors.BLUE);
-		board[SAFE_ADJACENT_POSITIONS[GREEN]].setSquareType(BoardSquareType.SAFE_ADJACENT, PlayerColors.GREEN);
-		board[SAFE_ADJACENT_POSITIONS[YELLOW]].setSquareType(BoardSquareType.SAFE_ADJACENT, PlayerColors.YELLOW);
+		board[SAFE_ADJACENT_POSITIONS[Player.RED]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.RED);
+		board[SAFE_ADJACENT_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.BLUE);
+		board[SAFE_ADJACENT_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.GREEN);
+		board[SAFE_ADJACENT_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.YELLOW);
+		
+		
 	}
 
 	/**
@@ -78,5 +63,13 @@ public class LudoModel {
 
 	private void setNextPlayer() {
 		currentPlayer = (currentPlayer + 1) % 4;
+	}
+
+	public BoardSquare[] getBoard() {
+		return board;
+	}
+	
+	public Player[] getPlayerList() {
+		return playerList;
 	}
 }

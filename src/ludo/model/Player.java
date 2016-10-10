@@ -1,18 +1,37 @@
 package ludo.model;
 
-class Player {
-	int playerNumber;
-	PlayerColors playerColor;
+public class Player {
+	/**
+	 * A constant representing the red player's index.
+	 */
+	public static final int RED = 0;
+	/**
+	 * A constant representing the blue player's index.
+	 */
+	public static final int BLUE = 1;
+	/**
+	 * A constant representing the green player's index.
+	 */
+	public static final int GREEN = 2;
+	/**
+	 * A constant representing the yellow player's index.
+	 */
+	public static final int YELLOW = 3;
+	/**
+	 * A constant representing all of the players.
+	 */
+	public static final int ALL = 4;
+	
+	int playerColor;
 	GamePiece[] gamePieces;
 
-	public Player(int paramPlayerNumber, PlayerColors paramPlayerColor) {
-		playerColor = paramPlayerColor;
-		playerNumber = paramPlayerNumber;
+	public Player(int paramPlayerNumber) {
+		playerColor = paramPlayerNumber;
 		gamePieces = new GamePiece[4];
-		gamePieces[0] = new GamePiece(playerColor);
-		gamePieces[1] = new GamePiece(playerColor);
-		gamePieces[2] = new GamePiece(playerColor);
-		gamePieces[3] = new GamePiece(playerColor);
+		gamePieces[0] = new GamePiece(RED, 0);
+		gamePieces[1] = new GamePiece(RED, 1);
+		gamePieces[2] = new GamePiece(RED, 2);
+		gamePieces[3] = new GamePiece(RED, 3);
 	}
 
 	public void setGamePiece(int paramPosition, GamePiece paramGamePiece) {
@@ -24,18 +43,18 @@ class Player {
 	}
 
 	public int getPlayerNumber() {
-		return playerNumber;
-	}
-
-	public void setPlayerNumber(int playerNumber) {
-		this.playerNumber = playerNumber;
-	}
-
-	public PlayerColors getPlayerColor() {
 		return playerColor;
 	}
 
-	public void setPlayerColor(PlayerColors playerColor) {
+	public void setPlayerNumber(int playerNumber) {
+		this.playerColor = playerNumber;
+	}
+
+	public int getPlayerColor() {
+		return playerColor;
+	}
+
+	public void setPlayerColor(int playerColor) {
 		this.playerColor = playerColor;
 	}
 
