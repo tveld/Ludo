@@ -145,22 +145,4 @@ public class BoardSquare {
   public void setPosition(int position) {
     this.position = position;
   }
-
-  /**
-   * The getter for array.
-   *
-   * @return the array
-   */
-  public BoardSquare[] getArray() {
-    return array;
-  }
-
-  /**
-   * The setter for array.
-   *
-   * @param array the array to set
-   */
-  public void setArray(BoardSquare[] array) {
-    this.array = array;
-  }
 }

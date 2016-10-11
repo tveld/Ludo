@@ -10,8 +10,8 @@ public class LudoModel {
 
   private int currentPlayer;
 
-  public static final int[] START_POSITIONS = { 0, 13, 26, 39 };
-  public static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
+  static final int[] START_POSITIONS = { 0, 13, 26, 39 };
+  static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
 
   Random rand;
 
@@ -75,11 +75,16 @@ public class LudoModel {
     currentPlayer = (currentPlayer + 1) % 4;
   }
 
-  public BoardSquare[] getBoard() {
-    return board;
-  }
-
-  public Player[] getPlayerList() {
-    return playerList;
+  /**
+   * A getter for a player, player number must be between 0 and 3.
+   * @param playerNumber The number of the player to return
+   * @return The player
+   */
+  public Player getPlayer(int playerNumber) {
+    if (playerNumber >= 0 && playerNumber <= 3) {
+      return playerList[playerNumber];
+    } else {
+      return null;
+    }
   }
 }

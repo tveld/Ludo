@@ -58,15 +58,6 @@ public class Player {
   }
 
   /**
-   * The getter for gamePieces.
-   *
-   * @return the gamePieces
-   */
-  public GamePiece[] getGamePieces() {
-    return gamePieces;
-  }
-
-  /**
    * The getter for gamePieces[index].
    *
    * @param index The index of the GamePiece to return
@@ -74,14 +65,5 @@ public class Player {
    */
   public GamePiece getGamePiece(int index) {
     return gamePieces[index];
-  }
-
-  /**
-   * The setter for gamePieces.
-   *
-   * @param gamePieces the gamePieces to set
-   */
-  public void setGamePieces(GamePiece[] gamePieces) {
-    this.gamePieces = gamePieces;
   }
 }
