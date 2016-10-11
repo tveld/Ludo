@@ -3,73 +3,83 @@ package ludo.model;
 import java.util.Random;
 
 public class LudoModel {
-	/**
-	 * The size of the board array in the model.
-	 */
-	private static final int BOARD_SIZE = 52;
+  /**
+   * The size of the board array in the model.
+   */
+  private static final int BOARD_SIZE = 52;
 
-	private int currentPlayer;
+  private int currentPlayer;
 
-	public static final int[] START_POSITIONS = { 0, 13, 26, 39 };
-	public static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
+  public static final int[] START_POSITIONS = { 0, 13, 26, 39 };
+  public static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
 
-	Random rand;
+  Random rand;
 
-	BoardSquare[] board;
-	Player[] playerList;
+  BoardSquare[] board;
+  Player[] playerList;
 
-	public LudoModel() {
-		rand = new Random();
+  /**
+   * Default constructor for LudoModel. Initializes random number generator,
+   * sets up the board, creates the players, and sets the current player to RED.
+   */
+  public LudoModel() {
+    rand = new Random();
 
-		playerList = new Player[4];
-		playerList[Player.RED] = new Player(Player.RED);
-		playerList[Player.BLUE] = new Player(Player.BLUE);
-		playerList[Player.GREEN] = new Player(Player.GREEN);
-		playerList[Player.YELLOW] = new Player(Player.YELLOW);
+    playerList = new Player[4];
+    playerList[Player.RED] = new Player(Player.RED);
+    playerList[Player.BLUE] = new Player(Player.BLUE);
+    playerList[Player.GREEN] = new Player(Player.GREEN);
+    playerList[Player.YELLOW] = new Player(Player.YELLOW);
 
-		setUpBoard();
+    setUpBoard();
 
-		currentPlayer = Player.RED;
-	}
+    currentPlayer = Player.RED;
+  }
 
-	public void setUpBoard() {
-		board = new BoardSquare[BOARD_SIZE];
+  /**
+   * This method creates the board and sets the starting positions of the game
+   * pieces.
+   */
+  public void setUpBoard() {
+    board = new BoardSquare[BOARD_SIZE];
 
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			board[i] = new BoardSquare(BoardSquare.REGULAR, Player.ALL, i);
-		}
+    for (int i = 0; i < BOARD_SIZE; i++) {
+      board[i] = new BoardSquare(BoardSquare.REGULAR, Player.ALL, i);
+    }
 
-		board[START_POSITIONS[Player.RED]].setSquareType(BoardSquare.START_POSITION);
-		board[START_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.START_POSITION);
-		board[START_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.START_POSITION);
-		board[START_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.START_POSITION);
+    board[START_POSITIONS[Player.RED]].setSquareType(BoardSquare.START_POSITION);
+    board[START_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.START_POSITION);
+    board[START_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.START_POSITION);
+    board[START_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.START_POSITION);
 
-		board[SAFE_ADJACENT_POSITIONS[Player.RED]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.RED);
-		board[SAFE_ADJACENT_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.BLUE);
-		board[SAFE_ADJACENT_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.GREEN);
-		board[SAFE_ADJACENT_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.YELLOW);
-		
-		
-	}
+    board[SAFE_ADJACENT_POSITIONS[Player.RED]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.RED);
+    board[SAFE_ADJACENT_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.SAFE_ADJACENT,
+        Player.BLUE);
+    board[SAFE_ADJACENT_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.SAFE_ADJACENT,
+        Player.GREEN);
+    board[SAFE_ADJACENT_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.SAFE_ADJACENT,
+        Player.YELLOW);
 
-	/**
-	 * This method simulates rolling a dice.
-	 * 
-	 * @return The random integer representing the dice roll
-	 */
-	private int rollDice() {
-		return rand.nextInt(6) + 1;
-	}
+  }
 
-	private void setNextPlayer() {
-		currentPlayer = (currentPlayer + 1) % 4;
-	}
+  /**
+   * This method simulates rolling a dice.
+   * 
+   * @return The random integer representing the dice roll
+   */
+  private int rollDice() {
+    return rand.nextInt(6) + 1;
+  }
 
-	public BoardSquare[] getBoard() {
-		return board;
-	}
-	
-	public Player[] getPlayerList() {
-		return playerList;
-	}
+  private void setNextPlayer() {
+    currentPlayer = (currentPlayer + 1) % 4;
+  }
+
+  public BoardSquare[] getBoard() {
+    return board;
+  }
+
+  public Player[] getPlayerList() {
+    return playerList;
+  }
 }

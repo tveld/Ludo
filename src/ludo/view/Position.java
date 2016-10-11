@@ -1,45 +1,68 @@
 package ludo.view;
 
 public class Position {
-	private int x;
-	private int y;
-	private String gamePieceName;
+  private int positionX;
+  private int positionY;
 
-	public Position() {
-		x = y = -1;
-	}
+  public Position() {
+    positionX = positionY = -1;
+  }
 
-	public Position(int pX, int pY) {
-		x = pX;
-		y = pY;
-	}
+  /**
+   * Create a Position with the specified values.
+   * 
+   * @param paramPositionX The X position
+   * @param paramPositionY The Y position
+   */
+  public Position(int paramPositionX, int paramPositionY) {
+    positionX = paramPositionX;
+    positionY = paramPositionY;
+  }
 
-	public void setXY(int pX, int pY) {
-		x = pX;
-		y = pY;
-	}
+  /**
+   * Setter for PositionX and PositionY.
+   * 
+   * @param paramPositionX The value to set as positionX
+   * @param paramPositionY The value to set as positionY 
+   */
+  public void setPositionXandY(int paramPositionX, int paramPositionY) {
+    positionX = paramPositionX;
+    positionY = paramPositionY;
+  }
 
-	public int getX() {
-		return x;
-	}
+  /**
+   * The getter for positionX.
+   *
+   * @return the positionX
+   */
+  public int getPositionX() {
+    return positionX;
+  }
 
-	public void setX(int pX) {
-		x = pX;
-	}
+  /**
+   * The setter for positionX.
+   *
+   * @param positionX the positionX to set
+   */
+  public void setPositionX(int positionX) {
+    this.positionX = positionX;
+  }
 
-	public int getY() {
-		return y;
-	}
+  /**
+   * The getter for positionY.
+   *
+   * @return the positionY
+   */
+  public int getPositionY() {
+    return positionY;
+  }
 
-	public void setY(int pY) {
-		y = pY;
-	}
-
-	public String getGamePieceName() {
-		return gamePieceName;
-	}
-
-	public void setGamePieceName(String gamePieceName) {
-		this.gamePieceName = gamePieceName;
-	}
+  /**
+   * The setter for positionY.
+   *
+   * @param positionY the positionY to set
+   */
+  public void setPositionY(int positionY) {
+    this.positionY = positionY;
+  }
 }

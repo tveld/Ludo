@@ -1,47 +1,75 @@
 package ludo.model;
 
 public class GamePiece {
-	public static final int IN_START = -1;
-	public static final int IN_HOME = -2;
-	private int player;
-	private int pieceNumber;
-	private int position;
+  public static final int IN_START = -1;
+  public static final int IN_HOME = -2;
+  private int player;
+  private int pieceNumber;
+  private int position;
 
-	public GamePiece(int pPlayerColor, int pieceNumber) {
-		player = pPlayerColor;
-		position = IN_START;
-		this.pieceNumber = pieceNumber;
-	}
+  /** 
+   * Constructor that creates a GamePiece with the specified values.
+   * 
+   * @param paramPlayerColor The player that this GamePiece belongs to.
+   * @param paramPieceNumber The number of this GamePiece
+   */
+  public GamePiece(int paramPlayerColor, int paramPieceNumber) {
+    player = paramPlayerColor;
+    position = IN_START;
+    this.pieceNumber = paramPieceNumber;
+  }
 
-	public int getPosition() {
-		return position;
-	}
+  /**
+   * The getter for player.
+   *
+   * @return the player
+   */
+  public int getPlayer() {
+    return player;
+  }
 
-	public void setPosition(int pPosition) {
-		position = pPosition;
-	}
+  /**
+   * The setter for player.
+   *
+   * @param player the player to set
+   */
+  public void setPlayer(int player) {
+    this.player = player;
+  }
 
-	public int getPlayer() {
-		return player;
-	}
+  /**
+   * The getter for pieceNumber.
+   *
+   * @return the pieceNumber
+   */
+  public int getPieceNumber() {
+    return pieceNumber;
+  }
 
-	public void setPlayer(int player) {
-		this.player = player;
-	}
+  /**
+   * The setter for pieceNumber.
+   *
+   * @param pieceNumber the pieceNumber to set
+   */
+  public void setPieceNumber(int pieceNumber) {
+    this.pieceNumber = pieceNumber;
+  }
 
-	public int getPieceNumber() {
-		return pieceNumber;
-	}
+  /**
+   * The getter for position.
+   *
+   * @return the position
+   */
+  public int getPosition() {
+    return position;
+  }
 
-	public void setPieceNumber(int pieceNumber) {
-		this.pieceNumber = pieceNumber;
-	}
-
-	public int getIN_START() {
-		return IN_START;
-	}
-
-	public int getIN_HOME() {
-		return IN_HOME;
-	}
+  /**
+   * The setter for position.
+   *
+   * @param position the position to set
+   */
+  public void setPosition(int position) {
+    this.position = position;
+  }
 }
