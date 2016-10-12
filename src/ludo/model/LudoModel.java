@@ -75,6 +75,15 @@ public class LudoModel {
     currentPlayer = (currentPlayer + 1) % 4;
   }
 
+  private boolean checkMove(int oldPos, int newPos, int diceRoll){
+	  
+	  return false;
+  }
+  
+  private boolean move(int oldPos, int newPos, int diceRoll){
+	  
+	  return false;
+  }
   /**
    * A getter for a player, player number must be between 0 and 3.
    * @param playerNumber The number of the player to return
