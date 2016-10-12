@@ -75,13 +75,42 @@ public class LudoModel {
     currentPlayer = (currentPlayer + 1) % 4;
   }
 
-  private boolean checkMove(int oldPos, int newPos, int diceRoll){
+  
+  private boolean move(int oldPos, int newPos, int diceRoll){
+	  checkMove(oldPos, newPos, diceRoll);
 	  
 	  return false;
   }
   
-  private boolean move(int oldPos, int newPos, int diceRoll){
+
+  private boolean checkMove(int oldPos, int newPos, int diceRoll){
+	  if(alreadyThere(oldPos, newPos)){
+		  return false;
+	  }
+	  return false;
+  }
+  
+  private boolean alreadyThere(int oldPos, int newPos){
+	  GamePiece atNew = board[newPos].getGamePiece();
 	  
+	  // check if a piece is in newPos
+	  if(atNew != null){
+		  
+		  int playerAtNew = atNew.getPlayer();
+		 
+		  // current player already there. Illegal move.
+		  if(playerAtNew == currentPlayer){
+			return true;
+			
+		  // need move piece to start.  Still legal move.
+		  } else {
+			  //move current piece to start
+			  GamePiece atOld = board[oldPos].getGamePiece();
+			  int playerAtOld = atOld.getPlayer();
+			  atOld.setPosition(START_POSITIONS[playerAtOld]);
+			  return false;
+		  }
+	  }
 	  return false;
   }
   /**
