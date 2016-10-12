@@ -77,23 +77,43 @@ public class LudoModel {
 
   
   private boolean move(int oldPos, int newPos, int diceRoll){
-	  checkMove(oldPos, newPos, diceRoll);
-	  
-	  return false;
+	  if(checkMove(oldPos, newPos, diceRoll)){
+		  return false;
+	  }
+	  return true;
   }
   
 
+  /**
+   * Check if all Ludo rules are satisfied before moving
+   * @param int oldPos, the old position we are attempting to move from
+   * @param int newPos, the new position we are attempting to move to
+   * @param int diceRoll, the number of positions to move forward
+   * @return boolean, true if can't move, false if can move
+   */
   private boolean checkMove(int oldPos, int newPos, int diceRoll){
-	  if(alreadyThere(oldPos, newPos)){
+	  
+	  
+	  if(isOccupied(oldPos, newPos)){
+		  return false;  
+		 
+	  } else if(cantMove(oldPos, newPos, diceRoll)){
 		  return false;
+		  
 	  }
-	  return false;
+	  return true;
   }
   
-  private boolean alreadyThere(int oldPos, int newPos){
+  /**
+   * Check if the new position is occupied.
+   * @param int oldPos, the old position we are attempting to move from
+   * @param int newPos, the new position we are attempting to move to
+   * @return boolean, true if can't move, false if can move
+   */
+  private boolean isOccupied(int oldPos, int newPos){
 	  GamePiece atNew = board[newPos].getGamePiece();
 	  
-	  // check if a piece is in newPos
+	  // check if a piece is in newPos.
 	  if(atNew != null){
 		  
 		  int playerAtNew = atNew.getPlayer();
@@ -106,13 +126,36 @@ public class LudoModel {
 		  } else {
 			  //move current piece to start
 			  GamePiece atOld = board[oldPos].getGamePiece();
-			  int playerAtOld = atOld.getPlayer();
-			  atOld.setPosition(START_POSITIONS[playerAtOld]);
+			  atOld.setPosition(START_POSITIONS[currentPlayer]);
 			  return false;
 		  }
 	  }
 	  return false;
   }
+  
+  /**
+   * Check if a player can't move piece.
+   * @param int oldPos, the old position we are attempting to move from
+   * @param int newPos, the new position we are attempting to move to
+   * @param int diceRoll, the number of positions to move forward
+   * @return boolean, true if can't move, false if can move
+   */
+  private boolean cantMove(int oldPos, int newPos, int diceRoll){
+	  // check if in start position
+	  if(oldPos == START_POSITIONS[currentPlayer]){
+		  
+		  // need a roll greater than 6 to leave start
+		  if(diceRoll < 6){
+			  return true;
+			  
+			  // can't move backwards
+		  } else if(newPos < oldPos){
+			  return true;
+		  }
+	  }
+	  return false;
+  }
+  
   /**
    * A getter for a player, player number must be between 0 and 3.
    * @param playerNumber The number of the player to return
