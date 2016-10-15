@@ -47,19 +47,23 @@ public class LudoModel {
       board[i] = new BoardSquare(BoardSquare.REGULAR, Player.ALL, i);
     }
 
-    board[START_POSITIONS[Player.RED]].setSquareType(BoardSquare.START_POSITION);
-    board[START_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.START_POSITION);
-    board[START_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.START_POSITION);
-    board[START_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.START_POSITION);
+    board[START_POSITIONS[Player.RED]].setSquareTypeAndPlayersAllowed(BoardSquare.START_POSITION,
+        Player.ALL);
+    board[START_POSITIONS[Player.BLUE]].setSquareTypeAndPlayersAllowed(BoardSquare.START_POSITION,
+        Player.ALL);
+    board[START_POSITIONS[Player.GREEN]].setSquareTypeAndPlayersAllowed(BoardSquare.START_POSITION,
+        Player.ALL);
+    board[START_POSITIONS[Player.YELLOW]].setSquareTypeAndPlayersAllowed(BoardSquare.START_POSITION,
+        Player.ALL);
 
-    board[SAFE_ADJACENT_POSITIONS[Player.RED]].setSquareType(BoardSquare.SAFE_ADJACENT, Player.RED);
-    board[SAFE_ADJACENT_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.SAFE_ADJACENT,
-        Player.BLUE);
-    board[SAFE_ADJACENT_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.SAFE_ADJACENT,
-        Player.GREEN);
-    board[SAFE_ADJACENT_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.SAFE_ADJACENT,
-        Player.YELLOW);
-
+    board[SAFE_ADJACENT_POSITIONS[Player.RED]]
+        .setSquareTypeAndPlayersAllowed(BoardSquare.SAFE_ADJACENT, Player.RED);
+    board[SAFE_ADJACENT_POSITIONS[Player.BLUE]]
+        .setSquareTypeAndPlayersAllowed(BoardSquare.SAFE_ADJACENT, Player.BLUE);
+    board[SAFE_ADJACENT_POSITIONS[Player.GREEN]]
+        .setSquareTypeAndPlayersAllowed(BoardSquare.SAFE_ADJACENT, Player.GREEN);
+    board[SAFE_ADJACENT_POSITIONS[Player.YELLOW]]
+        .setSquareTypeAndPlayersAllowed(BoardSquare.SAFE_ADJACENT, Player.YELLOW);
   }
 
   /**
@@ -67,98 +71,114 @@ public class LudoModel {
    * 
    * @return The random integer representing the dice roll
    */
-  private int rollDice() {
+  public int rollDice() {
     return rand.nextInt(6) + 1;
   }
 
-  private void setNextPlayer() {
+  /**
+   * This method advances the player counter and returns current player.
+   * 
+   * @return The new current player
+   */
+  public int nextPlayerTurn() {
     currentPlayer = (currentPlayer + 1) % 4;
+    return currentPlayer;
   }
 
-  
-  private boolean move(int oldPos, int newPos, int diceRoll){
-	  if(checkMove(oldPos, newPos, diceRoll)){
-		  return false;
-	  }
-	  return true;
+  private boolean move(int oldPos, int newPos, int diceRoll) {
+    if (checkMove(oldPos, newPos, diceRoll)) {
+      return false;
+    }
+    return true;
   }
-  
 
   /**
-   * Check if all Ludo rules are satisfied before moving
-   * @param int oldPos, the old position we are attempting to move from
-   * @param int newPos, the new position we are attempting to move to
-   * @param int diceRoll, the number of positions to move forward
+   * Check if all Ludo rules are satisfied before moving.
+   * 
+   * @param int
+   *          oldPos, the old position we are attempting to move from
+   * @param int
+   *          newPos, the new position we are attempting to move to
+   * @param int
+   *          diceRoll, the number of positions to move forward
    * @return boolean, true if can't move, false if can move
    */
-  private boolean checkMove(int oldPos, int newPos, int diceRoll){
-	  
-	  
-	  if(isOccupied(oldPos, newPos)){
-		  return false;  
-		 
-	  } else if(cantMove(oldPos, newPos, diceRoll)){
-		  return false;
-		  
-	  }
-	  return true;
+  private boolean checkMove(int oldPos, int newPos, int diceRoll) {
+
+    if (isOccupied(oldPos, newPos)) {
+      return false;
+
+    } else if (cantMove(oldPos, newPos, diceRoll)) {
+      return false;
+
+    }
+    return true;
   }
-  
+
   /**
    * Check if the new position is occupied.
-   * @param int oldPos, the old position we are attempting to move from
-   * @param int newPos, the new position we are attempting to move to
+   * 
+   * @param int
+   *          oldPos, the old position we are attempting to move from
+   * @param int
+   *          newPos, the new position we are attempting to move to
    * @return boolean, true if can't move, false if can move
    */
-  private boolean isOccupied(int oldPos, int newPos){
-	  GamePiece atNew = board[newPos].getGamePiece();
-	  
-	  // check if a piece is in newPos.
-	  if(atNew != null){
-		  
-		  int playerAtNew = atNew.getPlayer();
-		 
-		  // current player already there. Illegal move.
-		  if(playerAtNew == currentPlayer){
-			return true;
-			
-		  // need move piece to start.  Still legal move.
-		  } else {
-			  //move current piece to start
-			  GamePiece atOld = board[oldPos].getGamePiece();
-			  atOld.setPosition(START_POSITIONS[currentPlayer]);
-			  return false;
-		  }
-	  }
-	  return false;
+  private boolean isOccupied(int oldPos, int newPos) {
+    GamePiece atNew = board[newPos].getGamePiece();
+
+    // check if a piece is in newPos.
+    if (atNew != null) {
+
+      int playerAtNew = atNew.getPlayer();
+
+      // current player already there. Illegal move.
+      if (playerAtNew == currentPlayer) {
+        return true;
+
+        // need move piece to start. Still legal move.
+      } else {
+        // move current piece to start
+        GamePiece atOld = board[oldPos].getGamePiece();
+        atOld.setPosition(GamePiece.IN_START, false);
+        return false;
+      }
+    }
+    return false;
   }
-  
+
   /**
    * Check if a player can't move piece.
-   * @param int oldPos, the old position we are attempting to move from
-   * @param int newPos, the new position we are attempting to move to
-   * @param int diceRoll, the number of positions to move forward
+   * 
+   * @param int
+   *          oldPos, the old position we are attempting to move from
+   * @param int
+   *          newPos, the new position we are attempting to move to
+   * @param int
+   *          diceRoll, the number of positions to move forward
    * @return boolean, true if can't move, false if can move
    */
-  private boolean cantMove(int oldPos, int newPos, int diceRoll){
-	  // check if in start position
-	  if(oldPos == START_POSITIONS[currentPlayer]){
-		  
-		  // need a roll greater than 6 to leave start
-		  if(diceRoll < 6){
-			  return true;
-			  
-			  // can't move backwards
-		  } else if(newPos < oldPos){
-			  return true;
-		  }
-	  }
-	  return false;
+  private boolean cantMove(int oldPos, int newPos, int diceRoll) {
+    // check if in start position
+    if (oldPos == START_POSITIONS[currentPlayer]) {
+
+      // need a roll greater than 6 to leave start
+      if (diceRoll < 6) {
+        return true;
+
+        // can't move backwards
+      } else if (newPos < oldPos) {
+        return true;
+      }
+    }
+    return false;
   }
-  
+
   /**
    * A getter for a player, player number must be between 0 and 3.
-   * @param playerNumber The number of the player to return
+   * 
+   * @param playerNumber
+   *          The number of the player to return
    * @return The player
    */
   public Player getPlayer(int playerNumber) {
@@ -167,5 +187,14 @@ public class LudoModel {
     } else {
       return null;
     }
+  }
+
+  /**
+   * Getter for the current player.
+   * 
+   * @return The current player
+   */
+  public int getCurrentPlayer() {
+    return currentPlayer;
   }
 }

@@ -49,15 +49,6 @@ public class Player {
   }
 
   /**
-   * The setter for playerColor.
-   *
-   * @param playerColor the playerColor to set
-   */
-  public void setPlayerColor(int playerColor) {
-    this.playerColor = playerColor;
-  }
-
-  /**
    * The getter for gamePieces[index].
    *
    * @param index The index of the GamePiece to return

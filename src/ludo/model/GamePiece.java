@@ -6,6 +6,7 @@ public class GamePiece {
   private int player;
   private int pieceNumber;
   private int position;
+  private boolean inSafe;
 
   /** 
    * Constructor that creates a GamePiece with the specified values.
@@ -17,6 +18,7 @@ public class GamePiece {
     player = paramPlayerColor;
     position = IN_START;
     this.pieceNumber = paramPieceNumber;
+    inSafe = false;
   }
 
   /**
@@ -29,30 +31,12 @@ public class GamePiece {
   }
 
   /**
-   * The setter for player.
-   *
-   * @param player the player to set
-   */
-  public void setPlayer(int player) {
-    this.player = player;
-  }
-
-  /**
    * The getter for pieceNumber.
    *
    * @return the pieceNumber
    */
   public int getPieceNumber() {
     return pieceNumber;
-  }
-
-  /**
-   * The setter for pieceNumber.
-   *
-   * @param pieceNumber the pieceNumber to set
-   */
-  public void setPieceNumber(int pieceNumber) {
-    this.pieceNumber = pieceNumber;
   }
 
   /**
@@ -69,7 +53,17 @@ public class GamePiece {
    *
    * @param position the position to set
    */
-  public void setPosition(int position) {
+  public void setPosition(int position, boolean isInSafe) {
     this.position = position;
+    inSafe = isInSafe;
+  }
+  
+  /**
+   * The getter for inSafe.
+   *
+   * @return the position
+   */
+  public boolean isInSafe() {
+    return inSafe;
   }
 }
