@@ -77,7 +77,7 @@ public class LudoModel {
 
   
   private boolean move(int oldPos, int newPos, int diceRoll){
-	  if(checkMove(oldPos, newPos, diceRoll)){
+	  if(validMove(oldPos, newPos, diceRoll)){
 		  return false;
 	  }
 	  return true;
@@ -91,8 +91,7 @@ public class LudoModel {
    * @param int diceRoll, the number of positions to move forward
    * @return boolean, true if can't move, false if can move
    */
-  private boolean checkMove(int oldPos, int newPos, int diceRoll){
-	  
+  private boolean validMove(int oldPos, int newPos, int diceRoll){
 	  
 	  if(isOccupied(oldPos, newPos)){
 		  return false;  
