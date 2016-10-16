@@ -1,7 +1,6 @@
 package ludo.model;
 
 public class GamePiece {
-  public static final int IN_START = -1;
   public static final int IN_HOME = -2;
   private int player;
   private int pieceNumber;
@@ -15,7 +14,7 @@ public class GamePiece {
    */
   public GamePiece(int paramPlayerColor, int paramPieceNumber) {
     player = paramPlayerColor;
-    position = IN_START;
+    this.position = -99;
     this.pieceNumber = paramPieceNumber;
   }
 

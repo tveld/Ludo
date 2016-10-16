@@ -5,32 +5,28 @@ import ludo.model.LudoModel;
 import ludo.model.Player;
 
 public class LudoView {
-  private static final int SINGLE_ARRAY_SIZE = 72;
+  private static final int SINGLE_ARRAY_SIZE = 88;
   private static final int BOARD_SIZE = 15;
   private static final String[][] BOARD_COLORS = new String[][] {
-      { "rr", "rr", "rr", "rr", "rr", "rr", "  ", "  ", "  ", "yy", "yy", "yy", "yy", "yy", "yy" },
-      { "rr", "  ", "rr", "rr", "  ", "rr", "rr", "rr", "  ", "yy", "  ", "yy", "yy", "  ", "yy" },
-      { "rr", "rr", "rr", "rr", "rr", "rr", "  ", "rr", "  ", "yy", "yy", "yy", "yy", "yy", "yy" },
-      { "rr", "rr", "rr", "rr", "rr", "rr", "  ", "rr", "  ", "yy", "yy", "yy", "yy", "yy", "yy" },
-      { "rr", "  ", "rr", "rr", "  ", "rr", "  ", "rr", "  ", "yy", "  ", "yy", "yy", "  ", "yy" },
-      { "rr", "rr", "rr", "rr", "rr", "rr", "  ", "rr", "  ", "yy", "yy", "yy", "yy", "yy", "yy" },
-      { "  ", "  ", "  ", "  ", "  ", "  ", "HH", "HH", "HH", "  ", "  ", "  ", "  ", "yy", "  " },
-      { "  ", "bb", "bb", "bb", "bb", "bb", "HH", "HH", "HH", "yy", "yy", "yy", "yy", "yy", "  " },
-      { "  ", "bb", "  ", "  ", "  ", "  ", "HH", "HH", "HH", "  ", "  ", "  ", "  ", "  ", "  " },
-      { "bb", "bb", "bb", "bb", "bb", "bb", "  ", "gg", "  ", "gg", "gg", "gg", "gg", "gg", "gg" },
-      { "bb", "  ", "bb", "bb", "  ", "bb", "  ", "gg", "  ", "gg", "  ", "gg", "gg", "  ", "gg" },
-      { "bb", "bb", "bb", "bb", "bb", "bb", "  ", "gg", "  ", "gg", "gg", "gg", "gg", "gg", "gg" },
-      { "bb", "bb", "bb", "bb", "bb", "bb", "  ", "gg", "  ", "gg", "gg", "gg", "gg", "gg", "gg" },
-      { "bb", "  ", "bb", "bb", "  ", "bb", "  ", "gg", "gg", "gg", "  ", "gg", "gg", "  ", "gg" },
-      { "bb", "bb", "bb", "bb", "bb", "bb", "  ", "  ", "  ", "gg", "gg", "gg", "gg", "gg",
-          "gg" } };
+      { "RR", "**", "**", "**", "**", "**", "  ", "  ", "  ", "**", "**", "**", "**", "**", "BB" },
+      { "**", "  ", "**", "**", "  ", "**", "**", "**", "  ", "**", "  ", "**", "**", "  ", "**" },
+      { "**", "**", "**", "**", "**", "**", "  ", "**", "  ", "**", "**", "**", "**", "**", "**" },
+      { "**", "**", "**", "**", "**", "**", "  ", "**", "  ", "**", "**", "**", "**", "**", "**" },
+      { "**", "  ", "**", "**", "  ", "**", "  ", "**", "  ", "**", "  ", "**", "**", "  ", "**" },
+      { "**", "**", "**", "**", "**", "**", "  ", "**", "  ", "**", "**", "**", "**", "**", "**" },
+      { "  ", "  ", "  ", "  ", "  ", "  ", "##", "##", "##", "  ", "  ", "  ", "  ", "**", "  " },
+      { "  ", "**", "**", "**", "**", "**", "##", "##", "##", "**", "**", "**", "**", "**", "  " },
+      { "  ", "**", "  ", "  ", "  ", "  ", "##", "##", "##", "  ", "  ", "  ", "  ", "  ", "  " },
+      { "**", "**", "**", "**", "**", "**", "  ", "**", "  ", "**", "**", "**", "**", "**", "**" },
+      { "**", "  ", "**", "**", "  ", "**", "  ", "**", "  ", "**", "  ", "**", "**", "  ", "**" },
+      { "**", "**", "**", "**", "**", "**", "  ", "**", "  ", "**", "**", "**", "**", "**", "**" },
+      { "**", "**", "**", "**", "**", "**", "  ", "**", "  ", "**", "**", "**", "**", "**", "**" },
+      { "**", "  ", "**", "**", "  ", "**", "  ", "**", "**", "**", "  ", "**", "**", "  ", "**" },
+      { "YY", "**", "**", "**", "**", "**", "  ", "  ", "  ", "**", "**", "**", "**", "**",
+          "GG" } };
 
   private Position[] positionMappings;
-  private Position[][] startPositions;
-  private Position[] redSafePositionMappings;
-  private Position[] blueSafePositionMappings;
-  private Position[] greenSafePositionMappings;
-  private Position[] yellowSafePositionMappings;
+  private int[][] indexMappings;
 
   /**
    * Default constructor for LudoView. Creates the variables and triggers the
@@ -38,12 +34,28 @@ public class LudoView {
    */
   public LudoView() {
     positionMappings = new Position[SINGLE_ARRAY_SIZE];
-    startPositions = new Position[4][4];
-    redSafePositionMappings = new Position[5];
-    yellowSafePositionMappings = new Position[5];
-    greenSafePositionMappings = new Position[5];
-    blueSafePositionMappings = new Position[5];
     setPositionMappings();
+    setIndexMappings();
+  }
+
+  private void setIndexMappings() {
+    indexMappings = new int[BOARD_SIZE][BOARD_SIZE];
+
+    for (int i = 0; i < BOARD_SIZE; i++) {
+      for (int j = 0; j < BOARD_SIZE; j++) {
+        indexMappings[i][j] = -1;
+      }
+    }
+
+    for (int i = 0; i < SINGLE_ARRAY_SIZE; i++) {
+      indexMappings[positionMappings[i].getPositionX()][positionMappings[i].getPositionY()] = i;
+    }
+
+    for (int i = 6; i <= 9; i++) {
+      for (int j = 6; j <= 9; j++) {
+        indexMappings[i][j] = -2;
+      }
+    }
   }
 
   private void setPositionMappings() {
@@ -121,41 +133,47 @@ public class LudoView {
     // Set positions 67-71
     for (int i = 13; i >= 9; i--) {
       positionMappings[currPosition] = new Position(7, i);
+      currPosition++;
     }
 
-    // Set player starting positions
-    startPositions[Player.RED][0] = new Position(1, 1);
-    startPositions[Player.RED][1] = new Position(1, 4);
-    startPositions[Player.RED][2] = new Position(4, 1);
-    startPositions[Player.RED][3] = new Position(4, 4);
+    // Set red player starting positions
+    positionMappings[currPosition] = new Position(1, 1);
+    currPosition++;
+    positionMappings[currPosition] = new Position(1, 4);
+    currPosition++;
+    positionMappings[currPosition] = new Position(4, 1);
+    currPosition++;
+    positionMappings[currPosition] = new Position(4, 4);
+    currPosition++;
 
-    startPositions[Player.BLUE][0] = new Position(10, 1);
-    startPositions[Player.BLUE][1] = new Position(10, 4);
-    startPositions[Player.BLUE][2] = new Position(13, 1);
-    startPositions[Player.BLUE][3] = new Position(13, 4);
+    // Set blue player starting positions
+    positionMappings[currPosition] = new Position(10, 1);
+    currPosition++;
+    positionMappings[currPosition] = new Position(10, 4);
+    currPosition++;
+    positionMappings[currPosition] = new Position(13, 1);
+    currPosition++;
+    positionMappings[currPosition] = new Position(13, 4);
+    currPosition++;
 
-    startPositions[Player.YELLOW][0] = new Position(1, 10);
-    startPositions[Player.YELLOW][1] = new Position(1, 13);
-    startPositions[Player.YELLOW][2] = new Position(4, 10);
-    startPositions[Player.YELLOW][3] = new Position(4, 13);
+    // Set green player starting positions
+    positionMappings[currPosition] = new Position(10, 10);
+    currPosition++;
+    positionMappings[currPosition] = new Position(10, 13);
+    currPosition++;
+    positionMappings[currPosition] = new Position(13, 10);
+    currPosition++;
+    positionMappings[currPosition] = new Position(13, 13);
+    currPosition++;
 
-    startPositions[Player.GREEN][0] = new Position(10, 10);
-    startPositions[Player.GREEN][1] = new Position(10, 13);
-    startPositions[Player.GREEN][2] = new Position(13, 10);
-    startPositions[Player.GREEN][3] = new Position(13, 13);
-
-    int counter = 0;
-    for (int i = 1; i <= 5; i++) {
-      blueSafePositionMappings[counter] = new Position(7, i);
-      redSafePositionMappings[counter] = new Position(i, 7);
-      counter++;
-    }
-    counter = 0;
-    for (int i = 13; i >= 9; i--) {
-      greenSafePositionMappings[counter] = new Position(i, 7);
-      yellowSafePositionMappings[counter] = new Position(7, i);
-      counter++;
-    }
+    // Set yellow player starting positions
+    positionMappings[currPosition] = new Position(1, 10);
+    currPosition++;
+    positionMappings[currPosition] = new Position(1, 13);
+    currPosition++;
+    positionMappings[currPosition] = new Position(4, 10);
+    currPosition++;
+    positionMappings[currPosition] = new Position(4, 13);
   }
 
   /**
@@ -172,9 +190,7 @@ public class LudoView {
 
     for (int i = 0; i < 4; i++) {
       tempGamePiece = model.getPlayer(Player.RED).getGamePiece(i);
-      if (tempGamePiece.getPosition() == GamePiece.IN_START) {
-        tempPosition = startPositions[Player.RED][i];
-      } else if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
+      if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
         tempPosition = positionMappings[tempGamePiece.getPosition()];
       }
       tempBoard[tempPosition.getPositionX()][tempPosition.getPositionY()] = "R" + i;
@@ -182,9 +198,7 @@ public class LudoView {
 
     for (int i = 0; i < 4; i++) {
       tempGamePiece = model.getPlayer(Player.YELLOW).getGamePiece(i);
-      if (tempGamePiece.getPosition() == GamePiece.IN_START) {
-        tempPosition = startPositions[Player.YELLOW][i];
-      } else if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
+      if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
         tempPosition = positionMappings[tempGamePiece.getPosition()];
       }
       tempBoard[tempPosition.getPositionX()][tempPosition.getPositionY()] = "Y" + i;
@@ -192,9 +206,7 @@ public class LudoView {
 
     for (int i = 0; i < 4; i++) {
       tempGamePiece = model.getPlayer(Player.GREEN).getGamePiece(i);
-      if (tempGamePiece.getPosition() == GamePiece.IN_START) {
-        tempPosition = startPositions[Player.GREEN][i];
-      } else if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
+      if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
         tempPosition = positionMappings[tempGamePiece.getPosition()];
       }
       tempBoard[tempPosition.getPositionX()][tempPosition.getPositionY()] = "G" + i;
@@ -202,51 +214,29 @@ public class LudoView {
 
     for (int i = 0; i < 4; i++) {
       tempGamePiece = model.getPlayer(Player.BLUE).getGamePiece(i);
-      if (tempGamePiece.getPosition() == GamePiece.IN_START) {
-        tempPosition = startPositions[Player.BLUE][i];
-      } else if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
+      if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
         tempPosition = positionMappings[tempGamePiece.getPosition()];
       }
       tempBoard[tempPosition.getPositionX()][tempPosition.getPositionY()] = "B" + i;
     }
 
-    System.out.println(" ------------------------------");
-    for (int i = 0; i < 15; i++) {
-      System.out.print("|");
-      for (int j = 0; j < 15; j++) {
-        if (tempBoard[i][j] != null) {
-          System.out.print(tempBoard[i][j]);
+    System.out.println("     0  1  2  3  4  5  6  7  8  9 10 11 12 13 14");
+    System.out.println("    -- -- -- -- -- -- -- -- -- -- -- -- -- -- --");
+    for (int y = 0; y < 15; y++) {
+      System.out.printf("%2d|", y);
+      for (int x = 0; x < 15; x++) {
+        if (tempBoard[x][y] != null) {
+          System.out.print(" " + tempBoard[x][y]);
         } else {
-          System.out.print(BOARD_COLORS[i][j]);
+          System.out.print(" " + BOARD_COLORS[y][x]);
         }
       }
-      System.out.println("|");
+      System.out.println(" |");
     }
-    System.out.println(" ------------------------------");
+    System.out.println("    -- -- -- -- -- -- -- -- -- -- -- -- -- -- --");
   }
 
-  public Position[] getPositionMappings() {
-    return positionMappings;
+  public int getIndexMapping(int positionX, int positionY) {
+    return indexMappings[positionX][positionY];
   }
-
-  public Position[][] getStartPositions() {
-    return startPositions;
-  }
-
-  public Position[] getRedSafePositionMappings() {
-    return redSafePositionMappings;
-  }
-
-  public Position[] getBlueSafePositionMappings() {
-    return blueSafePositionMappings;
-  }
-
-  public Position[] getGreenSafePositionMappings() {
-    return greenSafePositionMappings;
-  }
-
-  public Position[] getYellowSafePositionMappings() {
-    return yellowSafePositionMappings;
-  }
-
 }

@@ -33,10 +33,10 @@ public class Player {
   public Player(int paramPlayerNumber) {
     playerColor = paramPlayerNumber;
     gamePieces = new GamePiece[4];
-    gamePieces[0] = new GamePiece(RED, 0);
-    gamePieces[1] = new GamePiece(RED, 1);
-    gamePieces[2] = new GamePiece(RED, 2);
-    gamePieces[3] = new GamePiece(RED, 3);
+    gamePieces[0] = new GamePiece(paramPlayerNumber, 0);
+    gamePieces[1] = new GamePiece(paramPlayerNumber, 1);
+    gamePieces[2] = new GamePiece(paramPlayerNumber, 2);
+    gamePieces[3] = new GamePiece(paramPlayerNumber, 3);
   }
 
   /**

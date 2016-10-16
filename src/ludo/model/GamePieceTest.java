@@ -7,8 +7,6 @@ import org.junit.Test;
 
 public class GamePieceTest {
   GamePiece testGamePiece;
-  Player testPlayer;
-  LudoModel testModel;
 
   int startPlayerColor = Player.RED;
   int startPieceNumber = 0;
@@ -20,10 +18,8 @@ public class GamePieceTest {
 
   @Test
   public void testGamePieceConstructor() {
-    int expectedPosition = GamePiece.IN_START;
     assertEquals(startPlayerColor, testGamePiece.getPlayer());
     assertEquals(startPieceNumber, testGamePiece.getPieceNumber());
-    assertEquals(expectedPosition, testGamePiece.getPosition());
   }
 
   @Test
