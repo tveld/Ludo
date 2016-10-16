@@ -35,14 +35,4 @@ public class GamePieceTest {
   public void testGamePieceGetPieceNumber() {
     assertEquals(startPieceNumber, testGamePiece.getPieceNumber());
   }
-
-  @Test
-  public void testGamePieceGetAndSetPosition() {
-    int expectedPosition = GamePiece.IN_HOME;
-    testGamePiece.setPosition(expectedPosition, false);
-    assertEquals(expectedPosition, testGamePiece.getPosition());
-    expectedPosition = 24;
-    testGamePiece.setPosition(expectedPosition, true);
-    assertEquals(expectedPosition, testGamePiece.getPosition());
-  }
 }

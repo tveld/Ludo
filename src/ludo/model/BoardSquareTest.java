@@ -1,10 +1,7 @@
 package ludo.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +24,6 @@ public class BoardSquareTest {
     assertEquals(null, testBoardSquare.getGamePiece());
     assertEquals(initPosition, testBoardSquare.getPosition());
     assertEquals(initPlayersAllowed, testBoardSquare.getPlayersAllowed());
-    assertNull(testBoardSquare.getSafePosition(0));
     assertNull(testBoardSquare.getGamePiece());
   }
 
@@ -41,7 +37,6 @@ public class BoardSquareTest {
     assertEquals(expectedSquareType, testBoardSquare.getSquareType());
     assertEquals(expectedPlayersAllowed, testBoardSquare.getPlayersAllowed());
     assertEquals(expectedPosition, testBoardSquare.getPosition());
-    assertNotNull(testBoardSquare.getSafePosition(0));
   }
   
   @Test
@@ -49,11 +44,9 @@ public class BoardSquareTest {
     GamePiece expectedGamePiece = new GamePiece(Player.RED, 0);
     testBoardSquare.setGamePiece(expectedGamePiece);
     assertEquals(expectedGamePiece, testBoardSquare.getGamePiece());
-    assertFalse(testBoardSquare.getGamePiece().isInSafe());
     
     testBoardSquare = new BoardSquare(BoardSquare.SAFE, Player.RED, 0);
     testBoardSquare.setGamePiece(expectedGamePiece);
     assertEquals(expectedGamePiece, testBoardSquare.getGamePiece());
-    assertTrue(testBoardSquare.getGamePiece().isInSafe());
   }
 }

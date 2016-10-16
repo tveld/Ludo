@@ -5,7 +5,7 @@ import ludo.model.LudoModel;
 import ludo.model.Player;
 
 public class LudoView {
-  private static final int SINGLE_ARRAY_SIZE = 52;
+  private static final int SINGLE_ARRAY_SIZE = 72;
   private static final int BOARD_SIZE = 15;
   private static final String[][] BOARD_COLORS = new String[][] {
       { "rr", "rr", "rr", "rr", "rr", "rr", "  ", "  ", "  ", "yy", "yy", "yy", "yy", "yy", "yy" },
@@ -46,7 +46,7 @@ public class LudoView {
     setPositionMappings();
   }
 
-  void setPositionMappings() {
+  private void setPositionMappings() {
     int currPosition = 0;
     // Set positions 0-5
     for (int i = 1; i <= 5; i++) {
@@ -102,6 +102,26 @@ public class LudoView {
     currPosition++;
     // Set position 51
     positionMappings[currPosition] = new Position(0, 6);
+    currPosition++;
+    // Set positions 52-56
+    for (int i = 1; i <= 5; i++) {
+      positionMappings[currPosition] = new Position(i, 7);
+      currPosition++;
+    }
+    // Set position 57-61
+    for (int i = 1; i <= 5; i++) {
+      positionMappings[currPosition] = new Position(7, i);
+      currPosition++;
+    }
+    // Set positions 62-66
+    for (int i = 13; i >= 9; i--) {
+      positionMappings[currPosition] = new Position(i, 7);
+      currPosition++;
+    }
+    // Set positions 67-71
+    for (int i = 13; i >= 9; i--) {
+      positionMappings[currPosition] = new Position(7, i);
+    }
 
     // Set player starting positions
     startPositions[Player.RED][0] = new Position(1, 1);
@@ -148,41 +168,44 @@ public class LudoView {
   public void printBoard(LudoModel model) {
     String[][] tempBoard = new String[BOARD_SIZE][BOARD_SIZE];
     Position tempPosition = new Position();
+    GamePiece tempGamePiece;
+
     for (int i = 0; i < 4; i++) {
-      if (model.getPlayer(Player.RED).getGamePiece(i).getPosition() == GamePiece.IN_START) {
+      tempGamePiece = model.getPlayer(Player.RED).getGamePiece(i);
+      if (tempGamePiece.getPosition() == GamePiece.IN_START) {
         tempPosition = startPositions[Player.RED][i];
-      } else if (model.getPlayer(Player.RED).getGamePiece(i).getPosition() != GamePiece.IN_HOME) {
-        tempPosition = positionMappings[model.getPlayer(Player.RED).getGamePiece(i).getPosition()];
+      } else if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
+        tempPosition = positionMappings[tempGamePiece.getPosition()];
       }
       tempBoard[tempPosition.getPositionX()][tempPosition.getPositionY()] = "R" + i;
     }
 
     for (int i = 0; i < 4; i++) {
-      if (model.getPlayer(Player.YELLOW).getGamePiece(i).getPosition() == GamePiece.IN_START) {
+      tempGamePiece = model.getPlayer(Player.YELLOW).getGamePiece(i);
+      if (tempGamePiece.getPosition() == GamePiece.IN_START) {
         tempPosition = startPositions[Player.YELLOW][i];
-      } else if (model.getPlayer(Player.YELLOW).getGamePiece(i)
-          .getPosition() != GamePiece.IN_HOME) {
-        tempPosition = positionMappings[model.getPlayer(Player.YELLOW).getGamePiece(i)
-            .getPosition()];
+      } else if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
+        tempPosition = positionMappings[tempGamePiece.getPosition()];
       }
       tempBoard[tempPosition.getPositionX()][tempPosition.getPositionY()] = "Y" + i;
     }
 
     for (int i = 0; i < 4; i++) {
-      if (model.getPlayer(Player.GREEN).getGamePiece(i).getPosition() == GamePiece.IN_START) {
+      tempGamePiece = model.getPlayer(Player.GREEN).getGamePiece(i);
+      if (tempGamePiece.getPosition() == GamePiece.IN_START) {
         tempPosition = startPositions[Player.GREEN][i];
-      } else if (model.getPlayer(Player.GREEN).getGamePiece(i).getPosition() != GamePiece.IN_HOME) {
-        tempPosition = positionMappings[model.getPlayer(Player.GREEN).getGamePiece(i)
-            .getPosition()];
+      } else if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
+        tempPosition = positionMappings[tempGamePiece.getPosition()];
       }
       tempBoard[tempPosition.getPositionX()][tempPosition.getPositionY()] = "G" + i;
     }
 
     for (int i = 0; i < 4; i++) {
-      if (model.getPlayer(Player.BLUE).getGamePiece(i).getPosition() == GamePiece.IN_START) {
+      tempGamePiece = model.getPlayer(Player.BLUE).getGamePiece(i);
+      if (tempGamePiece.getPosition() == GamePiece.IN_START) {
         tempPosition = startPositions[Player.BLUE][i];
-      } else if (model.getPlayer(Player.BLUE).getGamePiece(i).getPosition() != GamePiece.IN_HOME) {
-        tempPosition = positionMappings[model.getPlayer(Player.BLUE).getGamePiece(i).getPosition()];
+      } else if (tempGamePiece.getPosition() != GamePiece.IN_HOME) {
+        tempPosition = positionMappings[tempGamePiece.getPosition()];
       }
       tempBoard[tempPosition.getPositionX()][tempPosition.getPositionY()] = "B" + i;
     }
@@ -201,4 +224,29 @@ public class LudoView {
     }
     System.out.println(" ------------------------------");
   }
+
+  public Position[] getPositionMappings() {
+    return positionMappings;
+  }
+
+  public Position[][] getStartPositions() {
+    return startPositions;
+  }
+
+  public Position[] getRedSafePositionMappings() {
+    return redSafePositionMappings;
+  }
+
+  public Position[] getBlueSafePositionMappings() {
+    return blueSafePositionMappings;
+  }
+
+  public Position[] getGreenSafePositionMappings() {
+    return greenSafePositionMappings;
+  }
+
+  public Position[] getYellowSafePositionMappings() {
+    return yellowSafePositionMappings;
+  }
+
 }

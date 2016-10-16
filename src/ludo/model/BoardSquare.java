@@ -12,7 +12,6 @@ public class BoardSquare {
   private int playersAllowed;
   private GamePiece gamePiece;
   private int position;
-  private BoardSquare[] array;
 
   /**
    * Constructor to initialize a BoardSquare with the parameter values.
@@ -26,7 +25,8 @@ public class BoardSquare {
    */
   public BoardSquare(int paramSquareType, int paramPlayersAllowed, int paramPosition) {
     position = paramPosition;
-    setSquareTypeAndPlayersAllowed(paramSquareType, paramPlayersAllowed);
+    squareType = paramSquareType;
+    playersAllowed = paramPlayersAllowed;
   }
 
   /**
@@ -42,7 +42,7 @@ public class BoardSquare {
   public void setBoardSquare(int paramType, int paramPlayers, int paramPosition) {
     playersAllowed = paramPlayers;
     position = paramPosition;
-    setSquareTypeAndPlayersAllowed(paramType, paramPlayers);
+    squareType = paramType;
   }
 
   /**
@@ -60,22 +60,9 @@ public class BoardSquare {
    * 
    * @param paramSquareType
    *          The square type
-   * @param paramPlayerColor
-   *          The player to which the safe array belongs, if the square type is
-   *          SAFE_ADJACENT
    */
-  public void setSquareTypeAndPlayersAllowed(int paramSquareType, int paramPlayerColor) {
+  public void setSquareType(int paramSquareType) {
     this.squareType = paramSquareType;
-    this.playersAllowed = paramPlayerColor;
-    if (array == null && paramSquareType == SAFE_ADJACENT) {
-      array = new BoardSquare[6];
-      array[0] = new BoardSquare(SAFE, paramPlayerColor, 0);
-      array[1] = new BoardSquare(SAFE, paramPlayerColor, 1);
-      array[2] = new BoardSquare(SAFE, paramPlayerColor, 2);
-      array[3] = new BoardSquare(SAFE, paramPlayerColor, 3);
-      array[4] = new BoardSquare(SAFE, paramPlayerColor, 4);
-      array[5] = new BoardSquare(HOME, paramPlayerColor, 5);
-    }
   }
 
   /**
@@ -104,11 +91,7 @@ public class BoardSquare {
    */
   public void setGamePiece(GamePiece gamePiece) {
     this.gamePiece = gamePiece;
-    if (squareType == SAFE) {
-      gamePiece.setPosition(position, true);
-    } else {
-      gamePiece.setPosition(position, false);
-    }
+    this.gamePiece.setPosition(position);
   }
 
   /**
@@ -118,18 +101,5 @@ public class BoardSquare {
    */
   public int getPosition() {
     return position;
-  }
-
-  /**
-   * The getter for a safe position.
-   *
-   * @return the position
-   */
-  public BoardSquare getSafePosition(int positionNumber) {
-    if (array == null) {
-      return null;
-    } else {
-      return array[positionNumber];
-    }
   }
 }

@@ -6,17 +6,20 @@ public class LudoModel {
   /**
    * The size of the board array in the model.
    */
-  private static final int BOARD_SIZE = 52;
+  private static final int BOARD_SIZE = 72;
 
   private int currentPlayer;
 
   static final int[] START_POSITIONS = { 0, 13, 26, 39 };
   static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
+  static final int[] SAFE_POSITION_0 = { 52, 57, 62, 67 };
 
   Random rand;
 
   BoardSquare[] board;
   Player[] playerList;
+
+  boolean gameWon;
 
   /**
    * Default constructor for LudoModel. Initializes random number generator,
@@ -24,6 +27,8 @@ public class LudoModel {
    */
   public LudoModel() {
     rand = new Random();
+
+    gameWon = false;
 
     playerList = new Player[4];
     playerList[Player.RED] = new Player(Player.RED);
@@ -43,27 +48,42 @@ public class LudoModel {
   public void setUpBoard() {
     board = new BoardSquare[BOARD_SIZE];
 
-    for (int i = 0; i < BOARD_SIZE; i++) {
+    // Create the regular board squares
+    for (int i = 0; i < SAFE_POSITION_0[Player.RED]; i++) {
       board[i] = new BoardSquare(BoardSquare.REGULAR, Player.ALL, i);
     }
 
-    board[START_POSITIONS[Player.RED]].setSquareTypeAndPlayersAllowed(BoardSquare.START_POSITION,
-        Player.ALL);
-    board[START_POSITIONS[Player.BLUE]].setSquareTypeAndPlayersAllowed(BoardSquare.START_POSITION,
-        Player.ALL);
-    board[START_POSITIONS[Player.GREEN]].setSquareTypeAndPlayersAllowed(BoardSquare.START_POSITION,
-        Player.ALL);
-    board[START_POSITIONS[Player.YELLOW]].setSquareTypeAndPlayersAllowed(BoardSquare.START_POSITION,
-        Player.ALL);
+    // Create the red safe squares
+    for (int i = SAFE_POSITION_0[Player.RED]; i < SAFE_POSITION_0[Player.BLUE]; i++) {
+      board[i] = new BoardSquare(BoardSquare.SAFE, Player.RED, i);
+    }
 
-    board[SAFE_ADJACENT_POSITIONS[Player.RED]]
-        .setSquareTypeAndPlayersAllowed(BoardSquare.SAFE_ADJACENT, Player.RED);
-    board[SAFE_ADJACENT_POSITIONS[Player.BLUE]]
-        .setSquareTypeAndPlayersAllowed(BoardSquare.SAFE_ADJACENT, Player.BLUE);
-    board[SAFE_ADJACENT_POSITIONS[Player.GREEN]]
-        .setSquareTypeAndPlayersAllowed(BoardSquare.SAFE_ADJACENT, Player.GREEN);
-    board[SAFE_ADJACENT_POSITIONS[Player.YELLOW]]
-        .setSquareTypeAndPlayersAllowed(BoardSquare.SAFE_ADJACENT, Player.YELLOW);
+    // Create the blue safe squares
+    for (int i = SAFE_POSITION_0[Player.BLUE]; i < SAFE_POSITION_0[Player.GREEN]; i++) {
+      board[i] = new BoardSquare(BoardSquare.SAFE, Player.RED, i);
+    }
+
+    // Create the green safe squares
+    for (int i = SAFE_POSITION_0[Player.GREEN]; i < SAFE_POSITION_0[Player.YELLOW]; i++) {
+      board[i] = new BoardSquare(BoardSquare.SAFE, Player.RED, i);
+    }
+
+    // Create the yellow safe squares
+    for (int i = SAFE_POSITION_0[Player.YELLOW]; i < BOARD_SIZE; i++) {
+      board[i] = new BoardSquare(BoardSquare.SAFE, Player.RED, i);
+    }
+    
+    // Set the start position squares
+    board[START_POSITIONS[Player.RED]].setSquareType(BoardSquare.START_POSITION);
+    board[START_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.START_POSITION);
+    board[START_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.START_POSITION);
+    board[START_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.START_POSITION);
+
+    // Set the safe adjacent squares
+    board[SAFE_ADJACENT_POSITIONS[Player.RED]].setSquareType(BoardSquare.SAFE_ADJACENT);
+    board[SAFE_ADJACENT_POSITIONS[Player.BLUE]].setSquareType(BoardSquare.SAFE_ADJACENT);
+    board[SAFE_ADJACENT_POSITIONS[Player.GREEN]].setSquareType(BoardSquare.SAFE_ADJACENT);
+    board[SAFE_ADJACENT_POSITIONS[Player.YELLOW]].setSquareType(BoardSquare.SAFE_ADJACENT);
   }
 
   /**
@@ -103,16 +123,16 @@ public class LudoModel {
    *          diceRoll, the number of positions to move forward
    * @return boolean, true if can't move, false if can move
    */
-  private boolean validMove(int oldPos, int newPos, int diceRoll){
-	  
-	  if(isOccupied(oldPos, newPos)){
-		  return false;  
-		 
-	  } else if(cantMove(oldPos, newPos, diceRoll)){
-		  return false;
-		  
-	  }
-	  return true;
+  private boolean validMove(int oldPos, int newPos, int diceRoll) {
+
+    if (isOccupied(oldPos, newPos)) {
+      return false;
+
+    } else if (cantMove(oldPos, newPos, diceRoll)) {
+      return false;
+
+    }
+    return true;
   }
 
   /**
@@ -140,7 +160,7 @@ public class LudoModel {
       } else {
         // move current piece to start
         GamePiece atOld = board[oldPos].getGamePiece();
-        atOld.setPosition(GamePiece.IN_START, false);
+        atOld.setPosition(GamePiece.IN_START);
         return false;
       }
     }
@@ -196,5 +216,14 @@ public class LudoModel {
    */
   public int getCurrentPlayer() {
     return currentPlayer;
+  }
+
+  /**
+   * Getter for the game status.
+   * 
+   * @return The gameWon variable
+   */
+  public boolean getGameWon() {
+    return gameWon;
   }
 }
