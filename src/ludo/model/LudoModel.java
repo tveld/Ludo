@@ -138,9 +138,10 @@ public class LudoModel {
    */
   public boolean move(int oldPos, int newPos, int diceRoll) {
     if (validMove(oldPos, newPos, diceRoll)) {
+      return true;
+    } else {
       return false;
     }
-    return true;
   }
 
   /**
