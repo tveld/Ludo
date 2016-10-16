@@ -61,17 +61,17 @@ public class LudoModel {
 
     // Create the blue safe squares
     for (int i = SAFE_POSITION_0[Player.BLUE]; i < SAFE_POSITION_0[Player.GREEN]; i++) {
-      board[i] = new BoardSquare(BoardSquare.SAFE, Player.RED, i);
+      board[i] = new BoardSquare(BoardSquare.SAFE, Player.BLUE, i);
     }
 
     // Create the green safe squares
     for (int i = SAFE_POSITION_0[Player.GREEN]; i < SAFE_POSITION_0[Player.YELLOW]; i++) {
-      board[i] = new BoardSquare(BoardSquare.SAFE, Player.RED, i);
+      board[i] = new BoardSquare(BoardSquare.SAFE, Player.GREEN, i);
     }
 
     // Create the yellow safe squares
     for (int i = SAFE_POSITION_0[Player.YELLOW]; i < START_POSITIONS[Player.RED]; i++) {
-      board[i] = new BoardSquare(BoardSquare.SAFE, Player.RED, i);
+      board[i] = new BoardSquare(BoardSquare.SAFE, Player.YELLOW, i);
     }
 
     // Create the red start squares
@@ -221,6 +221,18 @@ public class LudoModel {
       } else if (newPos < oldPos) {
         return true;
       }
+    }
+    // make sure piece is moved correct number of spaces
+    if (oldPos + diceRoll != newPos) {
+    	return true;
+    }
+    // piece cannot move passed home position
+    if (newPos >= SAFE_POSITION_0[currentPlayer+1] || newPos >= START_POSITIONS[0]) {
+    	return true;
+    }
+    // check if piece moved passed safe spots
+    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer] % 50) {
+    	return true;
     }
     return false;
   }
