@@ -72,79 +72,79 @@ public class LudoModelTest {
   @Test
   public void testCantMoveFromStartRed1(){
 	assertEquals(Player.RED, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.RED], LudoModel.PIECE_ENTER_POSITIONS[Player.RED] + 1, 1) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.RED], 1) );
   }
   
   @Test
   public void testCantMoveFromStartRed2() {
 	assertEquals(Player.RED, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.RED], LudoModel.PIECE_ENTER_POSITIONS[Player.RED] + 2, 2) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.RED], 2) );
   }
   
   @Test
   public void testCantMoveFromStartRed3() {
 	assertEquals(Player.RED, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.RED], LudoModel.PIECE_ENTER_POSITIONS[Player.RED] + 3, 3) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.RED], 3) );
   }
   
   @Test
   public void testCantMoveFromStartRed4() {
 	assertEquals(Player.RED, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.RED], LudoModel.PIECE_ENTER_POSITIONS[Player.RED] + 4, 4) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.RED], 4) );
   }
   
   @Test
   public void testCantMoveFromStartRed5() {
 	assertEquals(Player.RED, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.RED], LudoModel.PIECE_ENTER_POSITIONS[Player.RED] + 5, 5) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.RED], 5) );
   }
   
   @Test
   public void testCanMoveFromStartRed6() {
 	assertEquals(Player.RED, lmodel.getCurrentPlayer());
-    assertTrue(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.RED], LudoModel.PIECE_ENTER_POSITIONS[Player.RED] + 6, 6) );
+    assertTrue(lmodel.move(LudoModel.START_POSITIONS[Player.RED],  6) );
   }
   
   @Test
   public void testCantMoveFromStartBlue1() {
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.BLUE, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE], LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE] + 1, 1) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.BLUE],  1) );
   }
   
   @Test
   public void testCantMoveFromStartBlue2() {
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.BLUE, lmodel.getCurrentPlayer());	  
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE], LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE] + 2, 2) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.BLUE],  2) );
   }
   
   @Test
   public void testCantMoveFromStartBlue3() {
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.BLUE, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE], LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE] + 3, 3) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.BLUE],  3) );
   }
   
   @Test
   public void testCantMoveFromStartBlue4() {
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.BLUE, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE], LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE] + 4, 4) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.BLUE], 4) );
   }
   
   @Test
   public void testCantMoveFromStartBlue5() {
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.BLUE, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE], LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE] + 5, 5) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.BLUE],  5) );
   }
   
   @Test
   public void testCanMoveFromStartBlue6() {
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.BLUE, lmodel.getCurrentPlayer());
-    assertTrue(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE], LudoModel.PIECE_ENTER_POSITIONS[Player.BLUE] + 6, 6) );
+    assertTrue(lmodel.move(LudoModel.START_POSITIONS[Player.BLUE], 6) );
   }
   
   @Test
@@ -152,7 +152,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.GREEN, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN], LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN] + 1, 1) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.GREEN],  1) );
   }
   
   @Test
@@ -160,7 +160,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.GREEN, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN], LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN] + 2, 2) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.GREEN], 2) );
   }
   
   @Test
@@ -168,7 +168,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.GREEN, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN], LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN] + 3, 3) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.GREEN], 3) );
   }
   
   @Test
@@ -176,7 +176,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.GREEN, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN], LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN] + 4, 4) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.GREEN],4) );
   }
   
   @Test
@@ -184,7 +184,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.GREEN, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN], LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN] + 5, 5) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.GREEN], 5) );
   }
   
   @Test
@@ -192,7 +192,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.GREEN, lmodel.getCurrentPlayer());
-    assertTrue(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN], LudoModel.PIECE_ENTER_POSITIONS[Player.GREEN] + 6, 6) );
+    assertTrue(lmodel.move(LudoModel.START_POSITIONS[Player.GREEN],  6) );
   }
   
   @Test
@@ -201,7 +201,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.YELLOW, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW], LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW] + 1, 1) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.YELLOW],  1) );
   }
   
   @Test
@@ -210,7 +210,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.YELLOW, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW], LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW] + 2, 2) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.YELLOW], 2) );
   }
   
   @Test
@@ -219,7 +219,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.YELLOW, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW], LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW] + 3, 3) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.YELLOW], 3) );
   }
   
   @Test
@@ -228,7 +228,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.YELLOW, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW], LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW] + 4, 4) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.YELLOW],  4) );
   }
   
   @Test
@@ -237,7 +237,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.YELLOW, lmodel.getCurrentPlayer());
-    assertFalse(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW], LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW] + 5, 5) );
+    assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.YELLOW], 5) );
   }
   
   @Test
@@ -246,7 +246,7 @@ public class LudoModelTest {
 	lmodel.nextPlayerTurn();
 	lmodel.nextPlayerTurn();
 	assertEquals(Player.YELLOW, lmodel.getCurrentPlayer());
-    assertTrue(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW], LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW] + 6, 6) );
+    assertTrue(lmodel.move(LudoModel.START_POSITIONS[Player.YELLOW],  6) );
   }
   
  

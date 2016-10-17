@@ -91,7 +91,9 @@ public class BoardSquare {
    */
   public void setGamePiece(GamePiece gamePiece) {
     this.gamePiece = gamePiece;
-    this.gamePiece.setPosition(position);
+    if(gamePiece != null){
+    	this.gamePiece.setPosition(position);
+    }
   }
 
   /**

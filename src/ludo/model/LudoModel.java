@@ -14,7 +14,7 @@ public class LudoModel {
   static final int[] PIECE_ENTER_POSITIONS = { 0, 13, 26, 39 };
   static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
   static final int[] SAFE_POSITION_0 = { 52, 57, 62, 67 };
-
+  
   Random rand;
 
   BoardSquare[] board;
@@ -136,7 +136,13 @@ public class LudoModel {
    * @param diceRoll The number of squares the move is supposed to be
    * @return True if the move was successful, false if it failed
    */
-  public boolean move(int oldPos, int newPos, int diceRoll) {
+  public boolean move(int oldPos, int diceRoll) {
+	int newPos = (oldPos + diceRoll) % 52;
+	
+	if(oldPos >= START_POSITIONS[Player.RED]){
+		newPos = PIECE_ENTER_POSITIONS[currentPlayer];
+	}
+	
     if (validMove(oldPos, newPos, diceRoll)) {
       GamePiece movePiece = board[oldPos].getGamePiece();
       board[oldPos].setGamePiece(null);
@@ -161,14 +167,17 @@ public class LudoModel {
    */
   private boolean validMove(int oldPos, int newPos, int diceRoll) {
 
-    if (isOccupied(oldPos, newPos)) {
-      return false;
-
-    } else if (cantMove(oldPos, newPos, diceRoll)) {
-      return false;
-
+    if(!cantMove(oldPos, newPos, diceRoll)){
+    	if(board[newPos].getGamePiece() != null){
+    		GamePiece atNew = board[newPos].getGamePiece();
+    		atNew.setPosition(START_POSITIONS[atNew.getPlayer()] + atNew.getPieceNumber());
+    	}
+    	
+    	return true;
+    } else {
+    	return false;
     }
-    return true;
+    
   }
 
   /**
@@ -195,14 +204,20 @@ public class LudoModel {
         // need move piece to start. Still legal move.
       } else {
         // move current piece to start
-        GamePiece atOld = board[oldPos].getGamePiece();
-        atOld.setPosition(START_POSITIONS[atOld.getPlayer()] + atOld.getPieceNumber());
+        
         return false;
       }
+    } else {
+    	return false;
     }
-    return false;
   }
 
+  private boolean isValidStart(int oldPos, int newPos, int diceRoll){
+	  return (oldPos >= START_POSITIONS[currentPlayer] &&
+                oldPos <= START_POSITIONS[currentPlayer] + 3
+			  		&& diceRoll == 6 
+			  			&& newPos == PIECE_ENTER_POSITIONS[currentPlayer]);
+  }
   /**
    * Check if a player can't move piece.
    * 
@@ -215,28 +230,22 @@ public class LudoModel {
    * @return boolean, true if can't move, false if can move
    */
   private boolean cantMove(int oldPos, int newPos, int diceRoll) {
-    // check if in start position
-    if (oldPos == PIECE_ENTER_POSITIONS[currentPlayer]) {
-
-      // need a roll greater than 6 to leave start
-      if (diceRoll < 6) {
-        return true;
-
-        // can't move backwards
-      } else if (newPos < oldPos) {
-        return true;
-      }
+	if( isOccupied(oldPos, newPos)){
+		return true;
+	}
+    if( isValidStart(oldPos, newPos, diceRoll)){
+    	return false;
     }
-    // make sure piece is moved correct number of spaces
-    if (oldPos + diceRoll != newPos) {
+    
+    if ((oldPos + diceRoll) % 52 != newPos) {
     	return true;
     }
     // piece cannot move passed home position
-    if (newPos >= SAFE_POSITION_0[currentPlayer+1] || newPos >= START_POSITIONS[0]) {
+    if (newPos >= SAFE_POSITION_0[currentPlayer] || newPos >= START_POSITIONS[currentPlayer]) {
     	return true;
     }
     // check if piece moved passed safe spots
-    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer] % 50) {
+    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
     	return true;
     }
     // check if player win
