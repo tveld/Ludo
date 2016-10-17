@@ -234,6 +234,8 @@ public class LudoModel {
     if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer] % 50) {
     	return true;
     }
+    // check if player win
+    
     return false;
   }
 
