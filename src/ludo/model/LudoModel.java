@@ -139,7 +139,7 @@ public class LudoModel {
   public boolean move(int oldPos, int diceRoll) {
 	int newPos = (oldPos + diceRoll) % 52;
 	
-	if(oldPos >= START_POSITIONS[Player.RED]){
+	if(oldPos >= START_POSITIONS[currentPlayer]){
 		newPos = PIECE_ENTER_POSITIONS[currentPlayer];
 	}
 	
@@ -158,12 +158,12 @@ public class LudoModel {
    * Check if all Ludo rules are satisfied before moving.
    * 
    * @param int
-   *          oldPos, the old position we are attempting to move from
+   *          oldPos the old position we are attempting to move from
    * @param int
-   *          newPos, the new position we are attempting to move to
+   *          newPos the new position we are attempting to move to
    * @param int
-   *          diceRoll, the number of positions to move forward
-   * @return boolean, true if can't move, false if can move
+   *          diceRoll the number of positions to move forward
+   * @return boolean true if can't move, false if can move
    */
   private boolean validMove(int oldPos, int newPos, int diceRoll) {
 
@@ -184,10 +184,10 @@ public class LudoModel {
    * Check if the new position is occupied.
    * 
    * @param int
-   *          oldPos, the old position we are attempting to move from
+   *          oldPos the old position we are attempting to move from
    * @param int
-   *          newPos, the new position we are attempting to move to
-   * @return boolean, true if can't move, false if can move
+   *          newPos the new position we are attempting to move to
+   * @return boolean true if can't move, false if can move
    */
   private boolean isOccupied(int oldPos, int newPos) {
     GamePiece atNew = board[newPos].getGamePiece();
@@ -211,7 +211,13 @@ public class LudoModel {
     	return false;
     }
   }
-
+/**
+ * Checks if valid move from start position.
+ * @param oldPos the position you are moving from
+ * @param newPos the position you are moving to
+ * @param diceRoll the role of the dice
+ * @return
+ */
   private boolean isValidStart(int oldPos, int newPos, int diceRoll){
 	  return (oldPos >= START_POSITIONS[currentPlayer] &&
                 oldPos <= START_POSITIONS[currentPlayer] + 3
@@ -241,21 +247,19 @@ public class LudoModel {
     	return true;
     }
     // piece cannot move passed home position
+    /*
     if (newPos >= SAFE_POSITION_0[currentPlayer] || newPos >= START_POSITIONS[currentPlayer]) {
     	return true;
     }
+    */
+    
     // check if piece moved passed safe spots
+    /*
     if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
     	return true;
     }
-    // check if player win
-    for (int i = 0; i < 4; i++) {
-    	if (playerList[currentPlayer].gamePieces[i].getPosition() == GamePiece.IN_HOME )
-    		gameWon = true;
-    	else {
-    		gameWon = false;
-    	}
-    }
+    */
+    
     return false;
   }
 
@@ -289,6 +293,16 @@ public class LudoModel {
    * @return The gameWon variable
    */
   public boolean getGameWon() {
-    return gameWon;
+	Player x = playerList[currentPlayer];
+		if(x.getGamePiece(0).getPosition() == GamePiece.IN_HOME
+				&& x.getGamePiece(1).getPosition() == GamePiece.IN_HOME
+					&& x.getGamePiece(2).getPosition() == GamePiece.IN_HOME
+						&& x.getGamePiece(3).getPosition() == GamePiece.IN_HOME){
+			return true;
+		} else {
+			return false;
+		}
+
+
   }
 }

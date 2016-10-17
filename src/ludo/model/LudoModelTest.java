@@ -249,7 +249,38 @@ public class LudoModelTest {
     assertTrue(lmodel.move(LudoModel.START_POSITIONS[Player.YELLOW],  6) );
   }
   
- 
+  @Test
+  public void testMoveFromStartTwice() {
+		lmodel.move(LudoModel.START_POSITIONS[Player.RED], 6);
+		assertFalse(lmodel.move(LudoModel.START_POSITIONS[Player.RED] + 1, 6));
+		
+  }
+  
+  @Test
+  public void testMoveIntoOccupied() {
+		lmodel.move(LudoModel.START_POSITIONS[Player.RED], 6);
+		lmodel.nextPlayerTurn();
+		lmodel.nextPlayerTurn();
+		lmodel.nextPlayerTurn();
+		
+		lmodel.move(LudoModel.START_POSITIONS[Player.YELLOW], 6);
+		assertTrue(lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.YELLOW], 13));
 
+  }
+  
+ 
+  @Test
+  public void testWin() {
+		lmodel.move(LudoModel.START_POSITIONS[Player.RED], 6);
+		assertFalse(lmodel.getGameWon());
+		lmodel.getPlayer(Player.RED).getGamePiece(0).setPosition(GamePiece.IN_HOME);
+		assertFalse(lmodel.getGameWon());
+		lmodel.getPlayer(Player.RED).getGamePiece(1).setPosition(GamePiece.IN_HOME);
+		assertFalse(lmodel.getGameWon());
+		lmodel.getPlayer(Player.RED).getGamePiece(2).setPosition(GamePiece.IN_HOME);
+		assertFalse(lmodel.getGameWon());
+		lmodel.getPlayer(Player.RED).getGamePiece(3).setPosition(GamePiece.IN_HOME);
+		assertTrue(lmodel.getGameWon());
+  }
 
 }
