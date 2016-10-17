@@ -240,10 +240,12 @@ public class LudoModel {
     	return true;
     }
     // check if player win
-    
     for (int i = 0; i < 4; i++) {
     	if (playerList[currentPlayer].gamePieces[i].getPosition() == GamePiece.IN_HOME )
     		gameWon = true;
+    	else {
+    		gameWon = false;
+    	}
     }
     return false;
   }
