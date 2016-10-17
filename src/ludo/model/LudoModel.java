@@ -138,9 +138,14 @@ public class LudoModel {
    */
   public boolean move(int oldPos, int newPos, int diceRoll) {
     if (validMove(oldPos, newPos, diceRoll)) {
+      GamePiece movePiece = board[oldPos].getGamePiece();
+      board[oldPos].setGamePiece(null);
+      board[newPos].setGamePiece(movePiece);
+     
+      return true;
+    } else {
       return false;
     }
-    return true;
   }
 
   /**
