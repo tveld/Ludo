@@ -254,11 +254,10 @@ public class LudoModel {
     */
     
     // check if piece moved passed safe spots
-    /*
-    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+    
+    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer] % 50) {
     	return true;
     }
-    */
     
     return false;
   }

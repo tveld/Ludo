@@ -268,6 +268,12 @@ public class LudoModelTest {
 
   }
   
+  @Test
+  public void testMovePassedSafe() {
+	  lmodel.move(LudoModel.START_POSITIONS[Player.RED], 6);
+	  lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.RED], 50);
+	  assertFalse(lmodel.move(LudoModel.SAFE_ADJACENT_POSITIONS[Player.RED], 4));
+  }
  
   @Test
   public void testWin() {
