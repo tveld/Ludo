@@ -2,25 +2,76 @@ package ludo.model;
 
 import java.util.Random;
 
+/**
+ * 
+ * @author Katie Mulder, Troy Veldhuizen, Adam Caldwell
+ *
+ */
 public class LudoModel {
   /**
    * The size of the board array in the model.
    */
   private static final int BOARD_SIZE = 88;
-
-  private int currentPlayer;
-
+  /**
+   * The size of the main board.
+   */
+  private static final int MAIN_BOARD_SIZE = 52;
+  /**
+   * A constant for the number of players.
+   */
+  private static final int NUMBER_PLAYERS = 4;
+  /**
+   * A constant for the random number generator.
+   */
+  private static final int DICE_VALUE = 6;
+  /**
+   * An array that holds the start positions of each player.
+   */
   static final int[] START_POSITIONS = { 72, 76, 80, 84 };
+  /**
+   * An array that holds the enter positions of each player.
+   */
   static final int[] PIECE_ENTER_POSITIONS = { 0, 13, 26, 39 };
+  /**
+   * An array that holds the safe adjacent positions of each player.
+   */
   static final int[] SAFE_ADJACENT_POSITIONS = { 50, 11, 24, 37 };
+  /**
+   * An array that holds the first safe positions of each player.
+   */
   static final int[] SAFE_POSITION_0 = { 52, 57, 62, 67 };
-  
-  Random rand;
-
-  BoardSquare[] board;
-  Player[] playerList;
-
-  boolean gameWon;
+  /**
+   * A constant representing index 0.
+   */
+  private static final int INDEX_0 = 0;
+  /**
+   * A constant representing index 1.
+   */
+  private static final int INDEX_1 = 1;
+  /**
+   * A constant representing index 2.
+   */
+  private static final int INDEX_2 = 2;
+  /**
+   * A constant representing index 3.
+   */
+  private static final int INDEX_3 = 3;
+  /**
+   * A variable that holds the current player.
+   */
+  private int currentPlayer;
+  /**
+   * A source of random numbers.
+   */
+  private Random rand;
+  /**
+   * An array that holds the board.
+   */
+  private BoardSquare[] board;
+  /**
+   * An array of players.
+   */
+  private Player[] playerList;
 
   /**
    * Default constructor for LudoModel. Initializes random number generator,
@@ -29,9 +80,7 @@ public class LudoModel {
   public LudoModel() {
     rand = new Random();
 
-    gameWon = false;
-
-    playerList = new Player[4];
+    playerList = new Player[NUMBER_PLAYERS];
     playerList[Player.RED] = new Player(Player.RED);
     playerList[Player.BLUE] = new Player(Player.BLUE);
     playerList[Player.GREEN] = new Player(Player.GREEN);
@@ -46,7 +95,7 @@ public class LudoModel {
    * This method creates the board and sets the starting positions of the game
    * pieces.
    */
-  public void setUpBoard() {
+  public final void setUpBoard() {
     board = new BoardSquare[BOARD_SIZE];
 
     // Create the regular board squares
@@ -55,42 +104,49 @@ public class LudoModel {
     }
 
     // Create the red safe squares
-    for (int i = SAFE_POSITION_0[Player.RED]; i < SAFE_POSITION_0[Player.BLUE]; i++) {
+    for (int i = SAFE_POSITION_0[Player.RED]; i < SAFE_POSITION_0[Player.BLUE];
+        i++) {
       board[i] = new BoardSquare(BoardSquare.SAFE, Player.RED, i);
     }
 
     // Create the blue safe squares
-    for (int i = SAFE_POSITION_0[Player.BLUE]; i < SAFE_POSITION_0[Player.GREEN]; i++) {
+    for (int i = SAFE_POSITION_0[Player.BLUE];
+        i < SAFE_POSITION_0[Player.GREEN]; i++) {
       board[i] = new BoardSquare(BoardSquare.SAFE, Player.BLUE, i);
     }
 
     // Create the green safe squares
-    for (int i = SAFE_POSITION_0[Player.GREEN]; i < SAFE_POSITION_0[Player.YELLOW]; i++) {
+    for (int i = SAFE_POSITION_0[Player.GREEN];
+        i < SAFE_POSITION_0[Player.YELLOW]; i++) {
       board[i] = new BoardSquare(BoardSquare.SAFE, Player.GREEN, i);
     }
 
     // Create the yellow safe squares
-    for (int i = SAFE_POSITION_0[Player.YELLOW]; i < START_POSITIONS[Player.RED]; i++) {
+    for (int i = SAFE_POSITION_0[Player.YELLOW];
+        i < START_POSITIONS[Player.RED]; i++) {
       board[i] = new BoardSquare(BoardSquare.SAFE, Player.YELLOW, i);
     }
 
     // Create the red start squares
     int counter = 0;
-    for (int i = START_POSITIONS[Player.RED]; i < START_POSITIONS[Player.BLUE]; i++) {
+    for (int i = START_POSITIONS[Player.RED]; i < START_POSITIONS[Player.BLUE];
+        i++) {
       board[i] = new BoardSquare(BoardSquare.START, Player.RED, i);
       board[i].setGamePiece(playerList[Player.RED].getGamePiece(counter));
       counter++;
     }
     // Create the blue start squares
     counter = 0;
-    for (int i = START_POSITIONS[Player.BLUE]; i < START_POSITIONS[Player.GREEN]; i++) {
+    for (int i = START_POSITIONS[Player.BLUE];
+        i < START_POSITIONS[Player.GREEN]; i++) {
       board[i] = new BoardSquare(BoardSquare.START, Player.BLUE, i);
       board[i].setGamePiece(playerList[Player.BLUE].getGamePiece(counter));
       counter++;
     }
     // Create the green start squares
     counter = 0;
-    for (int i = START_POSITIONS[Player.GREEN]; i < START_POSITIONS[Player.YELLOW]; i++) {
+    for (int i = START_POSITIONS[Player.GREEN];
+        i < START_POSITIONS[Player.YELLOW]; i++) {
       board[i] = new BoardSquare(BoardSquare.START, Player.GREEN, i);
       board[i].setGamePiece(playerList[Player.GREEN].getGamePiece(counter));
       counter++;
@@ -103,9 +159,10 @@ public class LudoModel {
       counter++;
     }
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < NUMBER_PLAYERS; i++) {
       board[PIECE_ENTER_POSITIONS[i]].setSquareType(BoardSquare.START_POSITION);
-      board[SAFE_ADJACENT_POSITIONS[i]].setSquareType(BoardSquare.SAFE_ADJACENT);
+      board[SAFE_ADJACENT_POSITIONS[i]]
+          .setSquareType(BoardSquare.SAFE_ADJACENT);
     }
   }
 
@@ -114,8 +171,8 @@ public class LudoModel {
    * 
    * @return The random integer representing the dice roll
    */
-  public int rollDice() {
-    return rand.nextInt(6) + 1;
+  public final int rollDice() {
+    return rand.nextInt(DICE_VALUE) + 1;
   }
 
   /**
@@ -123,31 +180,32 @@ public class LudoModel {
    * 
    * @return The new current player
    */
-  public int nextPlayerTurn() {
-    currentPlayer = (currentPlayer + 1) % 4;
+  public final int nextPlayerTurn() {
+    currentPlayer = (currentPlayer + 1) % NUMBER_PLAYERS;
     return currentPlayer;
   }
 
   /**
-   * This method moves a  piece from oldPos to newPos if it is a valid move.
+   * This method moves a piece from oldPos to newPos if it is a valid move.
    * 
-   * @param oldPos The current position of the piece
-   * @param newPos The desired position of the piece
-   * @param diceRoll The number of squares the move is supposed to be
+   * @param oldPos
+   *          The current position of the piece
+   * @param diceRoll
+   *          The number of squares the move is supposed to be
    * @return True if the move was successful, false if it failed
    */
-  public boolean move(int oldPos, int diceRoll) {
-	int newPos = (oldPos + diceRoll) % 52;
-	
-	if(oldPos >= START_POSITIONS[currentPlayer]){
-		newPos = PIECE_ENTER_POSITIONS[currentPlayer];
-	}
-	
+  public final boolean move(final int oldPos, final int diceRoll) {
+    int newPos = (oldPos + diceRoll) % MAIN_BOARD_SIZE;
+
+    if (oldPos >= START_POSITIONS[currentPlayer]) {
+      newPos = PIECE_ENTER_POSITIONS[currentPlayer];
+    }
+
     if (validMove(oldPos, newPos, diceRoll)) {
       GamePiece movePiece = board[oldPos].getGamePiece();
       board[oldPos].setGamePiece(null);
       board[newPos].setGamePiece(movePiece);
-     
+
       return true;
     } else {
       return false;
@@ -157,108 +215,106 @@ public class LudoModel {
   /**
    * Check if all Ludo rules are satisfied before moving.
    * 
-   * @param int
-   *          oldPos the old position we are attempting to move from
-   * @param int
-   *          newPos the new position we are attempting to move to
-   * @param int
-   *          diceRoll the number of positions to move forward
+   * @param oldPos
+   *          the old position we are attempting to move from
+   * @param newPos
+   *          the new position we are attempting to move to
+   * @param diceRoll
+   *          the number of positions to move forward
    * @return boolean true if can't move, false if can move
    */
-  private boolean validMove(int oldPos, int newPos, int diceRoll) {
+  private boolean validMove(final int oldPos, final int newPos,
+      final int diceRoll) {
 
-    if(!cantMove(oldPos, newPos, diceRoll)){
-    	if(board[newPos].getGamePiece() != null){
-    		GamePiece atNew = board[newPos].getGamePiece();
-    		atNew.setPosition(START_POSITIONS[atNew.getPlayer()] + atNew.getPieceNumber());
-    	}
-    	
-    	return true;
+    if (!cantMove(oldPos, newPos, diceRoll)) {
+      if (board[newPos].getGamePiece() != null) {
+        GamePiece atNew = board[newPos].getGamePiece();
+        atNew.setPosition(
+            START_POSITIONS[atNew.getPlayer()] + atNew.getPieceNumber());
+      }
+
+      return true;
     } else {
-    	return false;
+      return false;
     }
-    
+
   }
 
   /**
    * Check if the new position is occupied.
    * 
-   * @param int
-   *          oldPos the old position we are attempting to move from
-   * @param int
-   *          newPos the new position we are attempting to move to
+   * @param oldPos
+   *          the old position we are attempting to move from
+   * @param newPos
+   *          the new position we are attempting to move to
    * @return boolean true if can't move, false if can move
    */
-  private boolean isOccupied(int oldPos, int newPos) {
+  private boolean isOccupied(final int oldPos, final int newPos) {
     GamePiece atNew = board[newPos].getGamePiece();
 
     // check if a piece is in newPos.
     if (atNew != null) {
-
       int playerAtNew = atNew.getPlayer();
-
-      // current player already there. Illegal move.
-      if (playerAtNew == currentPlayer) {
-        return true;
-
-        // need move piece to start. Still legal move.
-      } else {
-        // move current piece to start
-        
-        return false;
-      }
+      return playerAtNew == currentPlayer;
     } else {
-    	return false;
+      return false;
     }
   }
-/**
- * Checks if valid move from start position.
- * @param oldPos the position you are moving from
- * @param newPos the position you are moving to
- * @param diceRoll the role of the dice
- * @return
- */
-  private boolean isValidStart(int oldPos, int newPos, int diceRoll){
-	  return (oldPos >= START_POSITIONS[currentPlayer] &&
-                oldPos <= START_POSITIONS[currentPlayer] + 3
-			  		&& diceRoll == 6 
-			  			&& newPos == PIECE_ENTER_POSITIONS[currentPlayer]);
+
+  /**
+   * Checks if valid move from start position.
+   * 
+   * @param oldPos
+   *          the position you are moving from
+   * @param newPos
+   *          the position you are moving to
+   * @param diceRoll
+   *          the role of the dice
+   * @return if the move is a valid start move
+   */
+  private boolean isValidStart(final int oldPos, final int newPos,
+      final int diceRoll) {
+    return (oldPos >= START_POSITIONS[currentPlayer]
+        && oldPos <= START_POSITIONS[currentPlayer] + NUMBER_PLAYERS - 1
+        && diceRoll == DICE_VALUE
+        && newPos == PIECE_ENTER_POSITIONS[currentPlayer]);
   }
+
   /**
    * Check if a player can't move piece.
    * 
-   * @param int
-   *          oldPos, the old position we are attempting to move from
-   * @param int
-   *          newPos, the new position we are attempting to move to
-   * @param int
-   *          diceRoll, the number of positions to move forward
+   * @param oldPos
+   *          the old position we are attempting to move from
+   * @param newPos
+   *          the new position we are attempting to move to
+   * @param diceRoll
+   *          the number of positions to move forward
    * @return boolean, true if can't move, false if can move
    */
-  private boolean cantMove(int oldPos, int newPos, int diceRoll) {
-	if( isOccupied(oldPos, newPos)){
-		return true;
-	}
-    if( isValidStart(oldPos, newPos, diceRoll)){
-    	return false;
+  private boolean cantMove(final int oldPos, final int newPos,
+      final int diceRoll) {
+    if (isOccupied(oldPos, newPos)) {
+      return true;
     }
-    
-    if ((oldPos + diceRoll) % 52 != newPos) {
-    	return true;
+    if (isValidStart(oldPos, newPos, diceRoll)) {
+      return false;
+    }
+
+    if ((oldPos + diceRoll) % MAIN_BOARD_SIZE != newPos) {
+      return true;
     }
     // piece cannot move passed home position
     /*
-    if (newPos >= SAFE_POSITION_0[currentPlayer] || newPos >= START_POSITIONS[currentPlayer]) {
-    	return true;
-    }
-    */
-    
+     * if (newPos >= SAFE_POSITION_0[currentPlayer] || newPos >=
+     * START_POSITIONS[currentPlayer]) { return true; }
+     */
+
     // check if piece moved passed safe spots
-    
-    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer] % 50) {
-    	return true;
-    }
-    
+    /*
+     * if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos >
+     * SAFE_ADJACENT_POSITIONS[currentPlayer]) { return true; }
+     */
+
     return false;
   }
 
@@ -269,8 +325,8 @@ public class LudoModel {
    *          The number of the player to return
    * @return The player
    */
-  public Player getPlayer(int playerNumber) {
-    if (playerNumber >= 0 && playerNumber <= 3) {
+  public final Player getPlayer(final int playerNumber) {
+    if (playerNumber >= 0 && playerNumber <= NUMBER_PLAYERS - 1) {
       return playerList[playerNumber];
     } else {
       return null;
@@ -282,7 +338,7 @@ public class LudoModel {
    * 
    * @return The current player
    */
-  public int getCurrentPlayer() {
+  public final int getCurrentPlayer() {
     return currentPlayer;
   }
 
@@ -291,17 +347,12 @@ public class LudoModel {
    * 
    * @return The gameWon variable
    */
-  public boolean getGameWon() {
-	Player x = playerList[currentPlayer];
-		if(x.getGamePiece(0).getPosition() == GamePiece.IN_HOME
-				&& x.getGamePiece(1).getPosition() == GamePiece.IN_HOME
-					&& x.getGamePiece(2).getPosition() == GamePiece.IN_HOME
-						&& x.getGamePiece(3).getPosition() == GamePiece.IN_HOME){
-			return true;
-		} else {
-			return false;
-		}
-
+  public final boolean getGameWon() {
+    Player x = playerList[currentPlayer];
+    return x.getGamePiece(INDEX_0).getPosition() == GamePiece.IN_HOME
+        && x.getGamePiece(INDEX_1).getPosition() == GamePiece.IN_HOME
+        && x.getGamePiece(INDEX_2).getPosition() == GamePiece.IN_HOME
+        && x.getGamePiece(INDEX_3).getPosition() == GamePiece.IN_HOME;
 
   }
 }

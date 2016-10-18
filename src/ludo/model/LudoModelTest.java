@@ -267,7 +267,6 @@ public class LudoModelTest {
     assertTrue(lmodel.move(LudoGame.PIECE_ENTER_POSITIONS[Player.YELLOW], 13));
 
   }
-<<<<<<< Updated upstream
   
   @Test
   public void testMovePassedSafe() {
@@ -275,10 +274,7 @@ public class LudoModelTest {
 	  lmodel.move(LudoModel.PIECE_ENTER_POSITIONS[Player.RED], 50);
 	  assertFalse(lmodel.move(LudoModel.SAFE_ADJACENT_POSITIONS[Player.RED], 4));
   }
- 
-=======
 
->>>>>>> Stashed changes
   @Test
   public void testWin() {
     lmodel.move(LudoGame.START_POSITIONS[Player.RED], 6);
