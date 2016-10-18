@@ -31,12 +31,11 @@ public class GamePieceTest {
   public void testGamePieceGetPieceNumber() {
     assertEquals(startPieceNumber, testGamePiece.getPieceNumber());
   }
-  
+
   @Test
   public void testGetGamePiecePosition() {
-	int expPos = 0;
-	testGamePiece.setPosition(expPos);
-    assertEquals(expPos , testGamePiece.getPosition());
+    int expPos = 0;
+    testGamePiece.setPosition(expPos);
+    assertEquals(expPos, testGamePiece.getPosition());
   }
 }
-

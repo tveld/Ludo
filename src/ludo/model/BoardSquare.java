@@ -1,16 +1,51 @@
 package ludo.model;
 
+/**
+ * A class representing a square on the board.
+ * 
+ * @author Katie Mulder
+ *
+ */
 public class BoardSquare {
-  public static final int DISABLED = 0;
+  /**
+   * A constant representing a regular square.
+   */
   public static final int REGULAR = 1;
+  /**
+   * A constant representing a starting square.
+   */
   public static final int START = 2;
+  /**
+   * A constant representing a start position square.
+   */
   public static final int START_POSITION = 3;
+  /**
+   * A constant representing a safe square.
+   */
   public static final int SAFE = 4;
+  /**
+   * A constant representing a safe adjacent square.
+   */
   public static final int SAFE_ADJACENT = 5;
+  /**
+   * A constant representing a home square.
+   */
   public static final int HOME = 6;
+  /**
+   * A variable holding the square type.
+   */
   private int squareType;
+  /**
+   * The players allowed to land on a square.
+   */
   private int playersAllowed;
+  /**
+   * The game piece on the square.
+   */
   private GamePiece gamePiece;
+  /**
+   * THe position of the square.
+   */
   private int position;
 
   /**
@@ -23,7 +58,8 @@ public class BoardSquare {
    * @param paramPosition
    *          The position of this BoardSquare in the LudoModel array
    */
-  public BoardSquare(int paramSquareType, int paramPlayersAllowed, int paramPosition) {
+  public BoardSquare(final int paramSquareType, final int paramPlayersAllowed,
+      final int paramPosition) {
     position = paramPosition;
     squareType = paramSquareType;
     playersAllowed = paramPlayersAllowed;
@@ -39,7 +75,8 @@ public class BoardSquare {
    * @param paramPosition
    *          The position in the LudoModel array
    */
-  public void setBoardSquare(int paramType, int paramPlayers, int paramPosition) {
+  public final void setBoardSquare(final int paramType, final int paramPlayers,
+      final int paramPosition) {
     playersAllowed = paramPlayers;
     position = paramPosition;
     squareType = paramType;
@@ -50,7 +87,7 @@ public class BoardSquare {
    *
    * @return the squareType
    */
-  public int getSquareType() {
+  public final int getSquareType() {
     return squareType;
   }
 
@@ -61,7 +98,7 @@ public class BoardSquare {
    * @param paramSquareType
    *          The square type
    */
-  public void setSquareType(int paramSquareType) {
+  public final void setSquareType(final int paramSquareType) {
     this.squareType = paramSquareType;
   }
 
@@ -70,7 +107,7 @@ public class BoardSquare {
    *
    * @return the playersAllowed
    */
-  public int getPlayersAllowed() {
+  public final int getPlayersAllowed() {
     return playersAllowed;
   }
 
@@ -79,20 +116,20 @@ public class BoardSquare {
    *
    * @return the gamePiece
    */
-  public GamePiece getGamePiece() {
+  public final GamePiece getGamePiece() {
     return gamePiece;
   }
 
   /**
    * The setter for gamePiece.
    *
-   * @param gamePiece
+   * @param paramGamePiece
    *          the gamePiece to set
    */
-  public void setGamePiece(GamePiece gamePiece) {
-    this.gamePiece = gamePiece;
-    if(gamePiece != null){
-    	this.gamePiece.setPosition(position);
+  public final void setGamePiece(final GamePiece paramGamePiece) {
+    this.gamePiece = paramGamePiece;
+    if (paramGamePiece != null) {
+      this.gamePiece.setPosition(position);
     }
   }
 
@@ -101,7 +138,7 @@ public class BoardSquare {
    *
    * @return the position
    */
-  public int getPosition() {
+  public final int getPosition() {
     return position;
   }
 }

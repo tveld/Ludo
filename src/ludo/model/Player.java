@@ -1,5 +1,11 @@
 package ludo.model;
 
+/**
+ * This class contains methods and variables that represent a game player.
+ * 
+ * @author Katie Mulder
+ *
+ */
 public class Player {
   /**
    * A constant representing the red player's index.
@@ -21,22 +27,49 @@ public class Player {
    * A constant representing all of the players.
    */
   public static final int ALL = 4;
+  /**
+   * A constant that represents the number of game pieces.
+   */
+  private static final int NUMBER_PIECES = 4;
+  /**
+   * A constant that represents an index.
+   */
+  private static final int INDEX_0 = 0;
+  /**
+   * A constant that represents an index.
+   */
+  private static final int INDEX_1 = 1;
+  /**
+   * A constant that represents an index.
+   */
+  private static final int INDEX_2 = 2;
+  /**
+   * A constant that represents an index.
+   */
+  private static final int INDEX_3 = 3;
 
-  int playerColor;
-  GamePiece[] gamePieces;
+  /**
+   * An integer representing the player color.
+   */
+  private int playerColor;
+  /**
+   * The array to hold the game pieces that belong to a player.
+   */
+  private GamePiece[] gamePieces;
 
   /**
    * Constructor for a player with the given number.
    * 
-   * @param paramPlayerNumber The number of this player
+   * @param paramPlayerNumber
+   *          The number of this player
    */
-  public Player(int paramPlayerNumber) {
+  public Player(final int paramPlayerNumber) {
     playerColor = paramPlayerNumber;
-    gamePieces = new GamePiece[4];
-    gamePieces[0] = new GamePiece(paramPlayerNumber, 0);
-    gamePieces[1] = new GamePiece(paramPlayerNumber, 1);
-    gamePieces[2] = new GamePiece(paramPlayerNumber, 2);
-    gamePieces[3] = new GamePiece(paramPlayerNumber, 3);
+    gamePieces = new GamePiece[NUMBER_PIECES];
+    gamePieces[INDEX_0] = new GamePiece(paramPlayerNumber, INDEX_0);
+    gamePieces[INDEX_1] = new GamePiece(paramPlayerNumber, INDEX_1);
+    gamePieces[INDEX_2] = new GamePiece(paramPlayerNumber, INDEX_2);
+    gamePieces[INDEX_3] = new GamePiece(paramPlayerNumber, INDEX_3);
   }
 
   /**
@@ -44,17 +77,18 @@ public class Player {
    *
    * @return the playerColor
    */
-  public int getPlayerColor() {
+  public final int getPlayerColor() {
     return playerColor;
   }
 
   /**
    * The getter for gamePieces[index].
    *
-   * @param index The index of the GamePiece to return
+   * @param index
+   *          The index of the GamePiece to return
    * @return the gamePieces[index]
    */
-  public GamePiece getGamePiece(int index) {
+  public final GamePiece getGamePiece(final int index) {
     return gamePieces[index];
   }
 }

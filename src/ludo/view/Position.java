@@ -1,20 +1,42 @@
 package ludo.view;
 
+/**
+ * A class that represents a position.
+ * 
+ * @author Katie Mulder
+ *
+ */
 public class Position {
+  /**
+   * The default value of a position.
+   */
+  private static final int DEFAULT_VALUE = -1;
+  /**
+   * The x coordinate of the position.
+   */
   private int positionX;
+  /**
+   * The y coordinate of the position.
+   */
   private int positionY;
 
+  /**
+   * A default constructor for a position.
+   */
   public Position() {
-    positionX = positionY = -1;
+    positionX = DEFAULT_VALUE;
+    positionY = DEFAULT_VALUE;
   }
 
   /**
    * Create a Position with the specified values.
    * 
-   * @param paramPositionX The X position
-   * @param paramPositionY The Y position
+   * @param paramPositionX
+   *          The X position
+   * @param paramPositionY
+   *          The Y position
    */
-  public Position(int paramPositionX, int paramPositionY) {
+  public Position(final int paramPositionX, final int paramPositionY) {
     positionX = paramPositionX;
     positionY = paramPositionY;
   }
@@ -22,10 +44,13 @@ public class Position {
   /**
    * Setter for PositionX and PositionY.
    * 
-   * @param paramPositionX The value to set as positionX
-   * @param paramPositionY The value to set as positionY 
+   * @param paramPositionX
+   *          The value to set as positionX
+   * @param paramPositionY
+   *          The value to set as positionY
    */
-  public void setPositionXandY(int paramPositionX, int paramPositionY) {
+  public final void setPositionXandY(final int paramPositionX,
+      final int paramPositionY) {
     positionX = paramPositionX;
     positionY = paramPositionY;
   }
@@ -35,17 +60,18 @@ public class Position {
    *
    * @return the positionX
    */
-  public int getPositionX() {
+  public final int getPositionX() {
     return positionX;
   }
 
   /**
    * The setter for positionX.
    *
-   * @param positionX the positionX to set
+   * @param paramPositionX
+   *          the positionX to set
    */
-  public void setPositionX(int positionX) {
-    this.positionX = positionX;
+  public final void setPositionX(final int paramPositionX) {
+    this.positionX = paramPositionX;
   }
 
   /**
@@ -53,16 +79,17 @@ public class Position {
    *
    * @return the positionY
    */
-  public int getPositionY() {
+  public final int getPositionY() {
     return positionY;
   }
 
   /**
    * The setter for positionY.
    *
-   * @param positionY the positionY to set
+   * @param paraPositionY
+   *          the positionY to set
    */
-  public void setPositionY(int positionY) {
-    this.positionY = positionY;
+  public final void setPositionY(final int paraPositionY) {
+    this.positionY = paraPositionY;
   }
 }

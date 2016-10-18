@@ -38,13 +38,13 @@ public class BoardSquareTest {
     assertEquals(expectedPlayersAllowed, testBoardSquare.getPlayersAllowed());
     assertEquals(expectedPosition, testBoardSquare.getPosition());
   }
-  
+
   @Test
   public void testSetGamePiece() {
     GamePiece expectedGamePiece = new GamePiece(Player.RED, 0);
     testBoardSquare.setGamePiece(expectedGamePiece);
     assertEquals(expectedGamePiece, testBoardSquare.getGamePiece());
-    
+
     testBoardSquare = new BoardSquare(BoardSquare.SAFE, Player.RED, 0);
     testBoardSquare.setGamePiece(expectedGamePiece);
     assertEquals(expectedGamePiece, testBoardSquare.getGamePiece());

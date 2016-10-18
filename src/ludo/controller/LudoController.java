@@ -1,69 +1,91 @@
 package ludo.controller;
 
-import ludo.model.LudoModel;
+import ludo.model.LudoGame;
 import ludo.view.LudoView;
 
 import java.util.Scanner;
 
-public class LudoController {
-	private static final String[] PLAYER_NAMES = new String[] { "Red", "Blue", "Green", "Yellow" };
+/**
+ * A class that implements the controller portion of the MVC design.
+ * 
+ * @author Katie Mulder
+ *
+ */
+public final class LudoController {
+  /**
+   * An array of player names.
+   */
+  private static final String[] PLAYER_NAMES =
+      new String[] { "Red", "Blue", "Green", "Yellow" };
+  /**
+   * A constant representing the number of players.
+   */
+  private static final int NUMBER_PLAYERS = 4;
 
-	/**
-	 * This class is the controller portion of the MVC.
-	 * 
-	 * @param args
-	 *            command-line arguments
-	 */
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		LudoModel ludoModel = new LudoModel();
-		LudoView ludoView = new LudoView();
+  /**
+   * A private constructor to make LudoController a utility class.
+   */
+  private LudoController() {
+  }
 
-		ludoView.printBoard(ludoModel);
+  /**
+   * This class is the controller portion of the MVC.
+   * 
+   * @param args
+   *          command-line arguments
+   */
+  public static void main(final String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    LudoGame ludoModel = new LudoGame();
+    LudoView ludoView = new LudoView();
 
-		int currentPlayer = ludoModel.getCurrentPlayer();
-		int pieceToMove;
-		int diceRoll = -1;
-		boolean invalidMove = false;
+    ludoView.printBoard(ludoModel);
 
-		while (ludoModel.getGameWon() == false) {
-			System.out.println("It is player " + PLAYER_NAMES[ludoModel.getCurrentPlayer()] + "'s turn.");
-			if (invalidMove == false) {
-				diceRoll = ludoModel.rollDice();
-			}
-			System.out.println("Player has rolled a " + diceRoll + ".");
-			System.out.print("Enter piece number to move (-1 if you can't move a piece): ");
-			pieceToMove = scanner.nextInt();
+    int currentPlayer = ludoModel.getCurrentPlayer();
+    int pieceToMove;
+    int diceRoll = -1;
+    boolean invalidMove = false;
 
-			if (pieceToMove != -1) {
+    while (!ludoModel.getGameWon()) {
+      System.out.println("It is player "
+          + PLAYER_NAMES[ludoModel.getCurrentPlayer()] + "'s turn.");
+      if (!invalidMove) {
+        diceRoll = ludoModel.rollDice();
+      }
+      System.out.println("Player has rolled a " + diceRoll + ".");
+      System.out
+          .print("Enter piece number to move (-1 if you can't move a piece): ");
+      pieceToMove = scanner.nextInt();
 
-				boolean goodMove;
+      if (pieceToMove != -1) {
 
-				if (pieceToMove >= 0 && pieceToMove <= 3) {
+        boolean goodMove;
 
-					System.out.println(
-							"Piece: " + PLAYER_NAMES[currentPlayer].charAt(0) + pieceToMove + " roll: " + diceRoll);
-					goodMove = ludoModel
-							.move(ludoModel.getPlayer(currentPlayer).getGamePiece(pieceToMove).getPosition(), diceRoll);
-					ludoView.printBoard(ludoModel);
-				} else {
-					goodMove = false;
-				}
-				
-				if (goodMove == false) {
-					System.out.println("Invalid move. Try again.");
-					invalidMove = true;
-				} else {
-					currentPlayer = ludoModel.nextPlayerTurn();
-					invalidMove = false;
-				}
+        if (pieceToMove >= 0 && pieceToMove <= NUMBER_PLAYERS - 1) {
 
-			} else {
-				currentPlayer = ludoModel.nextPlayerTurn();
-				invalidMove = false;
-			}
+          System.out.println("Piece: " + PLAYER_NAMES[currentPlayer].charAt(0)
+              + pieceToMove + " roll: " + diceRoll);
+          goodMove = ludoModel.move(ludoModel.getPlayer(currentPlayer)
+              .getGamePiece(pieceToMove).getPosition(), diceRoll);
+          ludoView.printBoard(ludoModel);
+        } else {
+          goodMove = false;
+        }
 
-		}
-		scanner.close();
-	}
+        if (!goodMove) {
+          System.out.println("Invalid move. Try again.");
+          invalidMove = true;
+        } else {
+          currentPlayer = ludoModel.nextPlayerTurn();
+          invalidMove = false;
+        }
+
+      } else {
+        currentPlayer = ludoModel.nextPlayerTurn();
+        invalidMove = false;
+      }
+
+    }
+    scanner.close();
+  }
 }

@@ -1,20 +1,44 @@
 package ludo.model;
 
+/**
+ * This class contains variables and methods used to represent a Game Piece.
+ * 
+ * @author Katie Mulder
+ *
+ */
 public class GamePiece {
+  /**
+   * The position value for a piece that is in home.
+   */
   public static final int IN_HOME = -2;
+  /**
+   * The value of a piece with an unassigned position.
+   */
+  private static final int UNASSIGNED_POSITION = -99;
+  /**
+   * The player number that the piece belongs to.
+   */
   private int player;
+  /**
+   * The number of this piece.
+   */
   private int pieceNumber;
+  /**
+   * The position of this piece on the board.
+   */
   private int position;
 
-  /** 
+  /**
    * Constructor that creates a GamePiece with the specified values.
    * 
-   * @param paramPlayerColor The player that this GamePiece belongs to.
-   * @param paramPieceNumber The number of this GamePiece
+   * @param paramPlayerColor
+   *          The player that this GamePiece belongs to.
+   * @param paramPieceNumber
+   *          The number of this GamePiece
    */
-  public GamePiece(int paramPlayerColor, int paramPieceNumber) {
+  public GamePiece(final int paramPlayerColor, final int paramPieceNumber) {
     player = paramPlayerColor;
-    this.position = -99;
+    this.position = UNASSIGNED_POSITION;
     this.pieceNumber = paramPieceNumber;
   }
 
@@ -23,7 +47,7 @@ public class GamePiece {
    *
    * @return the player
    */
-  public int getPlayer() {
+  public final int getPlayer() {
     return player;
   }
 
@@ -32,7 +56,7 @@ public class GamePiece {
    *
    * @return the pieceNumber
    */
-  public int getPieceNumber() {
+  public final int getPieceNumber() {
     return pieceNumber;
   }
 
@@ -41,16 +65,17 @@ public class GamePiece {
    *
    * @return the position
    */
-  public int getPosition() {
+  public final int getPosition() {
     return position;
   }
 
   /**
    * The setter for position.
    *
-   * @param position the position to set
+   * @param paramPosition
+   *          the position to set
    */
-  public void setPosition(int position) {
-    this.position = position;
+  public final void setPosition(final int paramPosition) {
+    this.position = paramPosition;
   }
 }
