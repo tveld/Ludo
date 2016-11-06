@@ -63,6 +63,21 @@ public class Player {
    * @param paramPlayerNumber
    *          The number of this player
    */
+  public Player(final int paramPlayerNumber, String iconName) {
+    playerColor = paramPlayerNumber;
+    gamePieces = new GamePiece[NUMBER_PIECES];
+    gamePieces[INDEX_0] = new GamePiece(paramPlayerNumber, INDEX_0, iconName);
+    gamePieces[INDEX_1] = new GamePiece(paramPlayerNumber, INDEX_1, iconName);
+    gamePieces[INDEX_2] = new GamePiece(paramPlayerNumber, INDEX_2, iconName);
+    gamePieces[INDEX_3] = new GamePiece(paramPlayerNumber, INDEX_3, iconName);
+  }
+  
+  /**
+   * Constructor for a player with the given number.
+   * 
+   * @param paramPlayerNumber
+   *          The number of this player
+   */
   public Player(final int paramPlayerNumber) {
     playerColor = paramPlayerNumber;
     gamePieces = new GamePiece[NUMBER_PIECES];

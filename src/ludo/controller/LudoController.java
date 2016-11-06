@@ -1,6 +1,7 @@
 package ludo.controller;
 
 import ludo.model.LudoGame;
+import ludo.view.LudoPanel;
 import ludo.view.LudoView;
 
 import java.util.Scanner;
@@ -38,6 +39,7 @@ public final class LudoController {
     Scanner scanner = new Scanner(System.in);
     LudoGame ludoModel = new LudoGame();
     LudoView ludoView = new LudoView();
+    LudoPanel ludoPanel = new LudoPanel(ludoModel);
 
     ludoView.printBoard(ludoModel);
 
@@ -68,6 +70,7 @@ public final class LudoController {
           goodMove = ludoModel.move(ludoModel.getPlayer(currentPlayer)
               .getGamePiece(pieceToMove).getPosition(), diceRoll);
           ludoView.printBoard(ludoModel);
+          ludoPanel.displayBoard(ludoModel);
         } else {
           goodMove = false;
         }

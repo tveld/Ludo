@@ -81,10 +81,10 @@ public class LudoGame {
     rand = new Random();
 
     playerList = new Player[NUMBER_PLAYERS];
-    playerList[Player.RED] = new Player(Player.RED);
-    playerList[Player.BLUE] = new Player(Player.BLUE);
-    playerList[Player.GREEN] = new Player(Player.GREEN);
-    playerList[Player.YELLOW] = new Player(Player.YELLOW);
+    playerList[Player.RED] = new Player(Player.RED, "redPiece.png");
+    playerList[Player.BLUE] = new Player(Player.BLUE, "bluePiece.png");
+    playerList[Player.GREEN] = new Player(Player.GREEN, "greenPiece.png");
+    playerList[Player.YELLOW] = new Player(Player.YELLOW, "yellowPiece.png");
 
     setUpBoard();
 
@@ -348,11 +348,55 @@ public class LudoGame {
    * @return The gameWon variable
    */
   public final boolean getGameWon() {
-    Player x = playerList[currentPlayer];
-    return x.getGamePiece(INDEX_0).getPosition() == GamePiece.IN_HOME
-        && x.getGamePiece(INDEX_1).getPosition() == GamePiece.IN_HOME
-        && x.getGamePiece(INDEX_2).getPosition() == GamePiece.IN_HOME
-        && x.getGamePiece(INDEX_3).getPosition() == GamePiece.IN_HOME;
+    for (Player x : playerList) {
+      if (x.getGamePiece(INDEX_0).getPosition() == GamePiece.IN_HOME
+          && x.getGamePiece(INDEX_1).getPosition() == GamePiece.IN_HOME
+          && x.getGamePiece(INDEX_2).getPosition() == GamePiece.IN_HOME
+          && x.getGamePiece(INDEX_3).getPosition() == GamePiece.IN_HOME) {
+        return true;
+      }
+    }
+    return false;
+  }
 
+  public final String getWinningPlayer() {
+    if (playerList[Player.RED].getGamePiece(INDEX_0)
+        .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.RED].getGamePiece(INDEX_1)
+            .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.RED].getGamePiece(INDEX_2)
+            .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.RED].getGamePiece(INDEX_3)
+            .getPosition() == GamePiece.IN_HOME) {
+      return "Red";
+    } else if (playerList[Player.GREEN].getGamePiece(INDEX_0)
+        .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.GREEN].getGamePiece(INDEX_1)
+            .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.GREEN].getGamePiece(INDEX_2)
+            .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.GREEN].getGamePiece(INDEX_3)
+            .getPosition() == GamePiece.IN_HOME) {
+      return "Green";
+    } else if (playerList[Player.YELLOW].getGamePiece(INDEX_0)
+        .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.YELLOW].getGamePiece(INDEX_1)
+            .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.YELLOW].getGamePiece(INDEX_2)
+            .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.YELLOW].getGamePiece(INDEX_3)
+            .getPosition() == GamePiece.IN_HOME) {
+      return "Yellow";
+    } else if (playerList[Player.BLUE].getGamePiece(INDEX_0)
+        .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.BLUE].getGamePiece(INDEX_1)
+            .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.BLUE].getGamePiece(INDEX_2)
+            .getPosition() == GamePiece.IN_HOME
+        && playerList[Player.BLUE].getGamePiece(INDEX_3)
+            .getPosition() == GamePiece.IN_HOME) {
+      return "Blue";
+    }
+    return "No Winner";
   }
 }

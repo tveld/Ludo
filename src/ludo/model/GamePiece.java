@@ -1,5 +1,11 @@
 package ludo.model;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
+import javafx.scene.image.Image;
+import sun.awt.IconInfo;
+
 /**
  * This class contains variables and methods used to represent a Game Piece.
  * 
@@ -27,7 +33,24 @@ public class GamePiece {
    * The position of this piece on the board.
    */
   private int position;
+  
+  private ImageIcon icon;
 
+  /**
+   * Constructor that creates a GamePiece with the specified values.
+   * 
+   * @param paramPlayerColor
+   *          The player that this GamePiece belongs to.
+   * @param paramPieceNumber
+   *          The number of this GamePiece
+   */
+  public GamePiece(final int paramPlayerColor, final int paramPieceNumber, String iconName) {
+    player = paramPlayerColor;
+    this.position = UNASSIGNED_POSITION;
+    this.pieceNumber = paramPieceNumber;
+    this.icon = new ImageIcon(iconName);
+  }
+  
   /**
    * Constructor that creates a GamePiece with the specified values.
    * 
@@ -77,5 +100,9 @@ public class GamePiece {
    */
   public final void setPosition(final int paramPosition) {
     this.position = paramPosition;
+  }
+
+  public ImageIcon getIcon() {
+    return icon;
   }
 }
