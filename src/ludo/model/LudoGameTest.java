@@ -267,6 +267,13 @@ public class LudoGameTest {
     assertTrue(lgame.move(LudoGame.PIECE_ENTER_POSITIONS[Player.YELLOW], 13));
 
   }
+  
+  @Test
+  public void testMovePassedHome() {
+	  lgame.move(LudoGame.START_POSITIONS[Player.RED], 6);
+	  lgame.move(LudoGame.PIECE_ENTER_POSITIONS[Player.RED], 52);
+	  assertFalse(lgame.move(LudoGame.SAFE_POSITION_0[Player.RED], 6));
+  }
 
   @Test
   public void testWin() {

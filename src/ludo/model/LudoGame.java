@@ -195,7 +195,8 @@ public class LudoGame {
    * @return True if the move was successful, false if it failed
    */
   public final boolean move(final int oldPos, final int diceRoll) {
-    int newPos = (oldPos + diceRoll) % MAIN_BOARD_SIZE;
+    // doesn't work when piece is in safe positions
+	int newPos = (oldPos + diceRoll) % MAIN_BOARD_SIZE;
 
     if (oldPos >= START_POSITIONS[currentPlayer]) {
       newPos = PIECE_ENTER_POSITIONS[currentPlayer];
@@ -304,17 +305,32 @@ public class LudoGame {
       return true;
     }
     // piece cannot move passed home position
-    /*
-     * if (newPos >= SAFE_POSITION_0[currentPlayer] || newPos >=
-     * START_POSITIONS[currentPlayer]) { return true; }
-     */
+    
+    if (newPos >= SAFE_POSITION_0[nextPlayerTurn()]) { 
+      return true;
+    }
+    
+    else if (currentPlayer == Player.YELLOW) {
+      if(newPos >= START_POSITIONS[Player.RED]) {
+    	  return true;
+      }
+    }
+     
 
     // check if piece moved passed safe spots
-    /*
-     * if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && newPos >
-     * SAFE_ADJACENT_POSITIONS[currentPlayer]) { return true; }
-     */
-
+    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] 
+    	&& newPos > SAFE_ADJACENT_POSITIONS[currentPlayer])  { 
+    	
+    	return true; 
+    }
+    else if (currentPlayer == Player.RED) {
+    	if ( (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos > 4) 
+    		&& (newPos > 50 || newPos <= 4)) {
+    		
+    		return true;
+    	}
+    }
+    
     return false;
   }
 
