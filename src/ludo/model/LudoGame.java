@@ -208,7 +208,16 @@ public class LudoGame {
       board[newPos].setGamePiece(movePiece);
 
       return true;
-    } else {
+    } 
+    else if(moveSafeSpots(oldPos, diceRoll) != -1) {
+    	newPos = moveSafeSpots(oldPos, diceRoll);
+        GamePiece movePiece = board[oldPos].getGamePiece();
+        board[oldPos].setGamePiece(null);
+        board[newPos].setGamePiece(movePiece);
+
+        return true;
+    }
+    else {
       return false;
     }
   }
@@ -261,6 +270,37 @@ public class LudoGame {
       return false;
     }
   }
+  
+  private int moveSafeSpots(int oldPos, int diceRoll) {
+	  int newPos = -1;
+	  int dr = diceRoll;
+	  
+	  if (currentPlayer == Player.RED) {
+		  if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+			 dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
+			 newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
+		  }
+	  }
+	  else if(currentPlayer == Player.BLUE) {
+		  if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+			 dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
+			 newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
+		  }
+	  }
+	  else if(currentPlayer == Player.GREEN) {
+		  if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+			 dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
+			 newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
+		  }
+	  }
+	  else if(currentPlayer == Player.YELLOW) {
+		  if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+			  dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
+			  newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
+		  }
+	  }
+	  return newPos;
+  }
 
   /**
    * Checks if valid move from start position.
@@ -304,18 +344,11 @@ public class LudoGame {
     if ((oldPos + diceRoll) % MAIN_BOARD_SIZE != newPos) {
       return true;
     }
-    // piece cannot move passed home position
     
-    if (newPos >= SAFE_POSITION_0[nextPlayerTurn()]) { 
+    // piece cannot move passed home position
+    if (oldPos + diceRoll >= SAFE_POSITION_0[currentPlayer] + 5) { 
       return true;
     }
-    
-    else if (currentPlayer == Player.YELLOW) {
-      if(newPos >= START_POSITIONS[Player.RED]) {
-    	  return true;
-      }
-    }
-     
 
     // check if piece moved passed safe spots
     if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] 
@@ -324,8 +357,8 @@ public class LudoGame {
     	return true; 
     }
     else if (currentPlayer == Player.RED) {
-    	if ( (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos > 4) 
-    		&& (newPos > 50 || newPos <= 4)) {
+    	if ( oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] 
+    		&& oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer] ) {
     		
     		return true;
     	}
