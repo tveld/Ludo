@@ -7,7 +7,8 @@ import ludo.view.LudoView;
 import java.util.Scanner;
 
 /**
- * A class that implements the controller portion of the MVC design.
+ * A class that implements the controller portion of the MVC design when using
+ * the text portion of the game.
  * 
  * @author Katie Mulder
  *
@@ -39,7 +40,7 @@ public final class LudoController {
     Scanner scanner = new Scanner(System.in);
     LudoGame ludoModel = new LudoGame();
     LudoView ludoView = new LudoView();
-    LudoPanel ludoPanel = new LudoPanel(ludoModel);
+    LudoPanel ludoPanel = new LudoPanel();
 
     ludoView.printBoard(ludoModel);
 

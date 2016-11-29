@@ -1,36 +1,28 @@
 package ludo.view;
 
-import ludo.model.GamePiece;
-import ludo.model.LudoGame;
-import ludo.model.Player;
-
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import ludo.model.GamePiece;
+import ludo.model.LudoGame;
+import ludo.model.Player;
+
 public class LudoPanel extends JPanel {
-  /**
-   * A constant representing the board array size.
-   */
-  private static final int SINGLE_ARRAY_SIZE = 88;
   /**
    * A constant representing the size of a board size.
    */
   private static final int BOARD_SIZE = 15;
-  /**
-   * A constant representing the number of players.
-   */
-  private static final int NUMBER_PLAYERS = 4;
   private static final int BUTTON_SIZE = 65;
   private static final int GUI_SIZE = 600;
 
@@ -77,24 +69,25 @@ public class LudoPanel extends JPanel {
 
   private static final long serialVersionUID = 1L;
   private static final int NUM_PIECES = 4;
-  private static final int NUM_PLAYERS = 4;
   private static final int[] PLAYERS =
       new int[] { Player.RED, Player.BLUE, Player.GREEN, Player.YELLOW };
+  private static final int BORDER_SIZE = 10;
+  private static final int GUI_MOD = 200;
   private Mapper mapper;
   private JButton[][] board;
+  private JButton passButton;
   private JButton[] topHome;
   private JButton[] bottomHome;
   private JPanel boardPanel;
-  private JMenuBar menu;
-  private JMenu file;
-  private JMenuItem quit, restart;
+  private JLabel currentPlayerLabel, currentDiceRollLabel, errorMessageLabel;
   private JFrame gui;
   private ButtonListener buttonListener = new ButtonListener();
-  private int fromRow = -1, toRow = -1;
-  private int fromCol = -1, toCol = -1;
-  private int clickCount = 0;
+  private LudoGame ludoGame;
+  private boolean invalidMove = false;
+  private int diceRoll;
 
-  public LudoPanel(LudoGame lmodel) {
+  public LudoPanel() {
+    ludoGame = new LudoGame();
     gui = new JFrame("Ludo");
     gui.setVisible(true);
     gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -135,13 +128,41 @@ public class LudoPanel extends JPanel {
       bottomHome[i].setOpaque(true);
     }
 
-    gui.add(boardPanel);
+    JPanel labelContainer = new JPanel(new GridLayout(3, 1));
+    errorMessageLabel = new JLabel();
+    currentDiceRollLabel = new JLabel();
+    currentPlayerLabel = new JLabel();
+
+    labelContainer.add(errorMessageLabel);
+    labelContainer.add(currentPlayerLabel);
+    labelContainer.add(currentDiceRollLabel);
+
+    JPanel buttonPanel = new JPanel();
+    passButton = new JButton("Pass");
+    passButton.addActionListener(buttonListener);
+    buttonPanel.add(passButton);
+
+    JPanel controlPanel = new JPanel(new BorderLayout());
+    controlPanel.add(labelContainer, BorderLayout.CENTER);
+    controlPanel.add(buttonPanel, BorderLayout.EAST);
+    controlPanel.setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE,
+        BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
+
+    JPanel container = new JPanel(new BorderLayout());
+    container.add(boardPanel, BorderLayout.CENTER);
+    container.add(controlPanel, BorderLayout.SOUTH);
+    container.setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE,
+        BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
+    container.setBackground(Color.WHITE);
+
+    gui.add(container);
     gui.pack();
-    gui.setSize(GUI_SIZE, GUI_SIZE);
+    gui.setSize(GUI_SIZE, GUI_SIZE + GUI_MOD);
+    gui.setResizable(false);
     gui.setVisible(true);
 
     mapper = new Mapper();
-    displayBoard(lmodel);
+    displayBoard(ludoGame);
   }
 
   /**
@@ -150,7 +171,7 @@ public class LudoPanel extends JPanel {
    * @param lgame
    *          The ludo model to display
    */
-  public void displayBoard(LudoGame lgame) {
+  public final void displayBoard(final LudoGame lgame) {
     if (lgame.getGameWon()) {
       JOptionPane.showMessageDialog(null,
           "Player " + lgame.getWinningPlayer() + " Wins!");
@@ -193,6 +214,38 @@ public class LudoPanel extends JPanel {
                       .setEnabled(true);
         }
       }
+    }
+    switch (ludoGame.getCurrentPlayer()) {
+      case Player.RED:
+        currentPlayerLabel.setText("It is Player Red's turn.");
+        break;
+      case Player.BLUE:
+        currentPlayerLabel.setText("It is Player Blue's turn.");
+        break;
+      case Player.GREEN:
+        currentPlayerLabel.setText("It is Player Green's turn.");
+        break;
+      case Player.YELLOW:
+        currentPlayerLabel.setText("It is Player Yellow's turn.");
+        break;
+      default:
+        break;
+    }
+
+    if (invalidMove) {
+      errorMessageLabel
+          .setText("Invalid move. Please choose another move or 'Pass'");
+    } else {
+      errorMessageLabel.setText("");
+    }
+    currentDiceRollLabel
+        .setText("Please choose a piece to move " + diceRoll + " spaces.");
+    if (ludoGame.getGameWon()) {
+      currentDiceRollLabel.setText("");
+      currentPlayerLabel.setText("");
+      errorMessageLabel.setText("");
+      JOptionPane.showMessageDialog(gui,
+          "Player " + ludoGame.getWinningPlayer() + "has won!");
     }
   }
 

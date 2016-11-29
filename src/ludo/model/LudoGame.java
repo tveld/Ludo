@@ -57,6 +57,10 @@ public class LudoGame {
    */
   private static final int INDEX_3 = 3;
   /**
+   * A constant representing the number of safe positions.
+   */
+  private static final int NUM_SPACES_SAFE = 5;
+  /**
    * A variable that holds the current player.
    */
   private int currentPlayer;
@@ -195,8 +199,7 @@ public class LudoGame {
    * @return True if the move was successful, false if it failed
    */
   public final boolean move(final int oldPos, final int diceRoll) {
-    // doesn't work when piece is in safe positions
-	int newPos = (oldPos + diceRoll) % MAIN_BOARD_SIZE;
+    int newPos = (oldPos + diceRoll) % MAIN_BOARD_SIZE;
 
     if (oldPos >= START_POSITIONS[currentPlayer]) {
       newPos = PIECE_ENTER_POSITIONS[currentPlayer];
@@ -208,16 +211,14 @@ public class LudoGame {
       board[newPos].setGamePiece(movePiece);
 
       return true;
-    } 
-    else if(moveSafeSpots(oldPos, diceRoll) != -1) {
-    	newPos = moveSafeSpots(oldPos, diceRoll);
-        GamePiece movePiece = board[oldPos].getGamePiece();
-        board[oldPos].setGamePiece(null);
-        board[newPos].setGamePiece(movePiece);
+    } else if (moveSafeSpots(oldPos, diceRoll) != -1) {
+      newPos = moveSafeSpots(oldPos, diceRoll);
+      GamePiece movePiece = board[oldPos].getGamePiece();
+      board[oldPos].setGamePiece(null);
+      board[newPos].setGamePiece(movePiece);
 
-        return true;
-    }
-    else {
+      return true;
+    } else {
       return false;
     }
   }
@@ -242,7 +243,6 @@ public class LudoGame {
         atNew.setPosition(
             START_POSITIONS[atNew.getPlayer()] + atNew.getPieceNumber());
       }
-
       return true;
     } else {
       return false;
@@ -261,7 +261,6 @@ public class LudoGame {
    */
   private boolean isOccupied(final int oldPos, final int newPos) {
     GamePiece atNew = board[newPos].getGamePiece();
-
     // check if a piece is in newPos.
     if (atNew != null) {
       int playerAtNew = atNew.getPlayer();
@@ -270,36 +269,47 @@ public class LudoGame {
       return false;
     }
   }
-  
-  private int moveSafeSpots(int oldPos, int diceRoll) {
-	  int newPos = -1;
-	  int dr = diceRoll;
-	  
-	  if (currentPlayer == Player.RED) {
-		  if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
-			 dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
-			 newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
-		  }
-	  }
-	  else if(currentPlayer == Player.BLUE) {
-		  if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
-			 dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
-			 newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
-		  }
-	  }
-	  else if(currentPlayer == Player.GREEN) {
-		  if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
-			 dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
-			 newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
-		  }
-	  }
-	  else if(currentPlayer == Player.YELLOW) {
-		  if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
-			  dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
-			  newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
-		  }
-	  }
-	  return newPos;
+
+  /**
+   * Check if a piece should move into a safe position.
+   * 
+   * @param oldPos
+   *          The current position of the piece
+   * @param diceRoll
+   *          The number of spaces to move
+   * @return The new position of the piece, or -1 if there is not a valid move
+   *         into a safe position
+   */
+  private int moveSafeSpots(final int oldPos, final int diceRoll) {
+    int newPos = -1;
+    int dr = diceRoll;
+
+    if (currentPlayer == Player.RED) {
+      if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer]
+          && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+        dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
+        newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
+      }
+    } else if (currentPlayer == Player.BLUE) {
+      if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer]
+          && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+        dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
+        newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
+      }
+    } else if (currentPlayer == Player.GREEN) {
+      if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer]
+          && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+        dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
+        newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
+      }
+    } else if (currentPlayer == Player.YELLOW) {
+      if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer]
+          && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+        dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
+        newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
+      }
+    }
+    return newPos;
   }
 
   /**
@@ -344,26 +354,25 @@ public class LudoGame {
     if ((oldPos + diceRoll) % MAIN_BOARD_SIZE != newPos) {
       return true;
     }
-    
+
     // piece cannot move passed home position
-    if (oldPos + diceRoll >= SAFE_POSITION_0[currentPlayer] + 5) { 
+    if (oldPos + diceRoll >= SAFE_POSITION_0[currentPlayer] + NUM_SPACES_SAFE) {
       return true;
     }
 
     // check if piece moved passed safe spots
-    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] 
-    	&& newPos > SAFE_ADJACENT_POSITIONS[currentPlayer])  { 
-    	
-    	return true; 
+    if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer]
+        && newPos > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+
+      return true;
+    } else if (currentPlayer == Player.RED) {
+      if (oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer]
+          && oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer]) {
+
+        return true;
+      }
     }
-    else if (currentPlayer == Player.RED) {
-    	if ( oldPos <= SAFE_ADJACENT_POSITIONS[currentPlayer] 
-    		&& oldPos + diceRoll > SAFE_ADJACENT_POSITIONS[currentPlayer] ) {
-    		
-    		return true;
-    	}
-    }
-    
+
     return false;
   }
 
@@ -408,6 +417,11 @@ public class LudoGame {
     return false;
   }
 
+  /**
+   * A method that returns the name of the winning player.
+   * 
+   * @return The name of the winning player, or null if no one has won.
+   */
   public final String getWinningPlayer() {
     if (playerList[Player.RED].getGamePiece(INDEX_0)
         .getPosition() == GamePiece.IN_HOME
