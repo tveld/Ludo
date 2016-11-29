@@ -71,9 +71,12 @@ public class LudoPanel extends JPanel {
   private static final int NUM_PIECES = 4;
   private static final int[] PLAYERS =
       new int[] { Player.RED, Player.BLUE, Player.GREEN, Player.YELLOW };
+  private static final String[] PLAYER_NAMES = 
+		  new String[] { "Red", "Blue", "Green", "Yellow" };  // player names
+  private static final int NUMBER_PLAYERS = 4;  //num of players
   private static final int BORDER_SIZE = 10;
   private static final int GUI_MOD = 200;
-  private Mapper mapper;
+  private static Mapper mapper;  // changed to static
   private JButton[][] board;
   private JButton passButton;
   private JButton[] topHome;
@@ -82,7 +85,7 @@ public class LudoPanel extends JPanel {
   private JLabel currentPlayerLabel, currentDiceRollLabel, errorMessageLabel;
   private JFrame gui;
   private ButtonListener buttonListener = new ButtonListener();
-  private LudoGame ludoGame;
+  private static LudoGame ludoGame;  //changed to static
   private boolean invalidMove = false;
   private int diceRoll;
 
@@ -158,7 +161,7 @@ public class LudoPanel extends JPanel {
     gui.add(container);
     gui.pack();
     gui.setSize(GUI_SIZE, GUI_SIZE + GUI_MOD);
-    gui.setResizable(false);
+    gui.setResizable(true);
     gui.setVisible(true);
 
     mapper = new Mapper();
@@ -251,7 +254,17 @@ public class LudoPanel extends JPanel {
 
   private static class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
+    	for (int x : PLAYERS) {
+    	      for (int i = 0; i < NUM_PIECES; i++) {
+    	    	  if(e.getSource() == ludoGame.getPlayer(x).getGamePiece(i)){
+    	    		  Position pos = mapper.getPositionMapping(
+    	    				  ludoGame.getPlayer(x).getGamePiece(i).getPosition() );
+    	    		 
 
+    	    		  
+    	    	  }
+    	      }
+    	}
     }
   }
 }
