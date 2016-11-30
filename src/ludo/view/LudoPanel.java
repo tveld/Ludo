@@ -88,7 +88,8 @@ public class LudoPanel extends JPanel {
   private LudoGame ludoGame;  
   private boolean invalidMove = false;
   private boolean goodMove = true;
-  private int diceRoll;
+  private int diceRoll = 6;
+  private boolean[] firstMove = {true, true, true, true};
 
   public LudoPanel() {
     ludoGame = new LudoGame();
@@ -262,6 +263,8 @@ public class LudoPanel extends JPanel {
     public void actionPerformed(ActionEvent e) {
       int currentPlayer = ludoGame.getCurrentPlayer();
       
+      
+      
       // pass: next player, roll dice, display board
       if(e.getSource() == passButton){
         ludoGame.nextPlayerTurn();
@@ -280,19 +283,26 @@ public class LudoPanel extends JPanel {
       	        
       	    	  if(e.getSource() == board[pos.getPositionX()][pos.getPositionY()]){
       	   
-      	    	     goodMove = ludoGame.move(mapper.getIndexMapping(pos.getPositionX(), pos.getPositionY()), diceRoll);
+      	    	     goodMove = ludoGame.move(mapper.getIndexMapping(pos.getPositionY(), pos.getPositionX()), diceRoll);
       	    	     
       	    	     // move complete: next player, roll dice, display board
       	    	     if(goodMove){
       	    	       invalidMove = false;
       	    	       ludoGame.nextPlayerTurn();
-      	    	       diceRoll = ludoGame.rollDice();
+      	    	       if (firstMove[ludoGame.getCurrentPlayer()]) {
+      	    	         diceRoll = 6;
+      	    	       }
+      	    	       else {
+      	    	         diceRoll = ludoGame.rollDice();
+      	    	       }
       	    	       displayBoard(ludoGame);
+      	    	       firstMove[currentPlayer] = false;
       	    	     // set invalid to true, display board
       	    	     } else {
       	    	       invalidMove = true;
       	    	       displayBoard(ludoGame);
       	    	     }
+      	    	     displayBoard(ludoGame);
       	    	      	    	    
       	        }
       	    		  
