@@ -248,7 +248,7 @@ public class LudoPanel extends JPanel {
       currentPlayerLabel.setText("");
       errorMessageLabel.setText("");
       JOptionPane.showMessageDialog(gui,
-          "Player " + ludoGame.getWinningPlayer() + "has won!");
+          "Player " + ludoGame.getWinningPlayer() + " has won!");
     }
   }
 
@@ -256,13 +256,18 @@ public class LudoPanel extends JPanel {
     public void actionPerformed(ActionEvent e) {
     	for (int x : PLAYERS) {
     	      for (int i = 0; i < NUM_PIECES; i++) {
-    	    	  if(e.getSource() == ludoGame.getPlayer(x).getGamePiece(i)){
-    	    		  Position pos = mapper.getPositionMapping(
-    	    				  ludoGame.getPlayer(x).getGamePiece(i).getPosition() );
-    	    		 
-
+    	        if (x == ludoGame.getCurrentPlayer()) {
+    	          if (e.getSource() == ludoGame.getPlayer(x).getGamePiece(i)){
+    	            Position pos = mapper.getPositionMapping(
+    	                ludoGame.getPlayer(x).getGamePiece(i).getPosition() );
     	    		  
-    	    	  }
+    	    		  
+    	    		  
+    	          }
+    	        }
+    	        else {
+    	          // Throw exception
+    	        }
     	      }
     	}
     }
