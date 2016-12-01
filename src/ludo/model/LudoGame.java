@@ -318,6 +318,10 @@ public class LudoGame {
         dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
         newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
       }
+    } 
+    
+    if(board[newPos].getGamePiece() != null) {
+      newPos = -1;
     }
     return newPos;
   }
