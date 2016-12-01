@@ -63,15 +63,24 @@ public class Mapper {
    * An array that maps a position in the LudoModel array into the 2D board.
    */
   private int[][] indexMappings;
-  
+
   public Mapper() {
     positionMappings = new Position[SINGLE_ARRAY_SIZE];
     indexMappings = new int[BOARD_SIZE][BOARD_SIZE];
     setPositionMappings();
     setIndexMappings();
+    for (int i = 0; i < BOARD_SIZE; i++) {
+      for (int j = 0; j < BOARD_SIZE; j++) {
+        System.out.printf(" %2d", indexMappings[i][j]);
+      }
+      System.out.println();
+    }
+    for (int i = 0; i < SINGLE_ARRAY_SIZE; i++) {
+      System.out.println(i + ": " + positionMappings[i].getPositionX() + " "
+          + positionMappings[i].getPositionY());
+    }
   }
-  
-  
+
   /**
    * A method to set up the position mappings.
    */
@@ -83,12 +92,12 @@ public class Mapper {
     }
 
     for (int i = 0; i < SINGLE_ARRAY_SIZE; i++) {
-      indexMappings[positionMappings[i].getPositionX()][positionMappings[i]
-          .getPositionY()] = i;
+      indexMappings[positionMappings[i].getPositionY()][positionMappings[i]
+          .getPositionX()] = i;
     }
 
-    for (int i = INDEX_6; i <= INDEX_9; i++) {
-      for (int j = INDEX_6; j <= INDEX_9; j++) {
+    for (int i = INDEX_6; i < INDEX_9; i++) {
+      for (int j = INDEX_6; j < INDEX_9; j++) {
         indexMappings[i][j] = GamePiece.IN_HOME;
       }
     }
@@ -178,9 +187,9 @@ public class Mapper {
     // Set red player starting positions
     positionMappings[currPosition] = new Position(INDEX_1, INDEX_1);
     currPosition++;
-    positionMappings[currPosition] = new Position(INDEX_1, INDEX_4);
-    currPosition++;
     positionMappings[currPosition] = new Position(INDEX_4, INDEX_1);
+    currPosition++;
+    positionMappings[currPosition] = new Position(INDEX_1, INDEX_4);
     currPosition++;
     positionMappings[currPosition] = new Position(INDEX_4, INDEX_4);
     currPosition++;
@@ -188,9 +197,9 @@ public class Mapper {
     // Set blue player starting positions
     positionMappings[currPosition] = new Position(INDEX_10, INDEX_1);
     currPosition++;
-    positionMappings[currPosition] = new Position(INDEX_10, INDEX_4);
-    currPosition++;
     positionMappings[currPosition] = new Position(INDEX_13, INDEX_1);
+    currPosition++;
+    positionMappings[currPosition] = new Position(INDEX_10, INDEX_4);
     currPosition++;
     positionMappings[currPosition] = new Position(INDEX_13, INDEX_4);
     currPosition++;
@@ -198,9 +207,9 @@ public class Mapper {
     // Set green player starting positions
     positionMappings[currPosition] = new Position(INDEX_10, INDEX_10);
     currPosition++;
-    positionMappings[currPosition] = new Position(INDEX_10, INDEX_13);
-    currPosition++;
     positionMappings[currPosition] = new Position(INDEX_13, INDEX_10);
+    currPosition++;
+    positionMappings[currPosition] = new Position(INDEX_10, INDEX_13);
     currPosition++;
     positionMappings[currPosition] = new Position(INDEX_13, INDEX_13);
     currPosition++;
@@ -208,13 +217,13 @@ public class Mapper {
     // Set yellow player starting positions
     positionMappings[currPosition] = new Position(INDEX_1, INDEX_10);
     currPosition++;
-    positionMappings[currPosition] = new Position(INDEX_1, INDEX_13);
-    currPosition++;
     positionMappings[currPosition] = new Position(INDEX_4, INDEX_10);
+    currPosition++;
+    positionMappings[currPosition] = new Position(INDEX_1, INDEX_13);
     currPosition++;
     positionMappings[currPosition] = new Position(INDEX_4, INDEX_13);
   }
-  
+
   /**
    * A method to fetch the index mapping of a given position.
    * 

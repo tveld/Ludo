@@ -199,23 +199,33 @@ public class LudoGame {
    * @return True if the move was successful, false if it failed
    */
   public final boolean move(final int oldPos, final int diceRoll) {
+    if (oldPos != GamePiece.IN_HOME && board[oldPos].getGamePiece().getPlayer() != currentPlayer) {
+      return false;
+    }
     int newPos = (oldPos + diceRoll) % MAIN_BOARD_SIZE;
 
     if (oldPos >= START_POSITIONS[currentPlayer]) {
       newPos = PIECE_ENTER_POSITIONS[currentPlayer];
+    } else if (oldPos >= SAFE_POSITION_0[Player.RED]) {
+      newPos = oldPos + diceRoll;
     }
 
     if (validMove(oldPos, newPos, diceRoll)) {
       GamePiece movePiece = board[oldPos].getGamePiece();
       board[oldPos].setGamePiece(null);
-      board[newPos].setGamePiece(movePiece);
-
+      if (newPos == SAFE_POSITION_0[currentPlayer] + NUM_SPACES_SAFE) {
+        movePiece.setPosition(GamePiece.IN_HOME);
+      } else {
+        board[newPos].setGamePiece(movePiece);
+      }
       return true;
     } else if (moveSafeSpots(oldPos, diceRoll) != -1) {
       newPos = moveSafeSpots(oldPos, diceRoll);
       GamePiece movePiece = board[oldPos].getGamePiece();
       board[oldPos].setGamePiece(null);
-      board[newPos].setGamePiece(movePiece);
+      if (newPos != GamePiece.IN_HOME) {
+        board[newPos].setGamePiece(movePiece);
+      }
 
       return true;
     } else {
@@ -240,14 +250,12 @@ public class LudoGame {
     if (!cantMove(oldPos, newPos, diceRoll)) {
       if (board[newPos].getGamePiece() != null) {
         GamePiece atNew = board[newPos].getGamePiece();
-        atNew.setPosition(
-            START_POSITIONS[atNew.getPlayer()] + atNew.getPieceNumber());
+        board[START_POSITIONS[atNew.getPlayer()] + atNew.getPieceNumber()].setGamePiece(atNew);
       }
       return true;
     } else {
       return false;
     }
-
   }
 
   /**
@@ -344,6 +352,9 @@ public class LudoGame {
    */
   private boolean cantMove(final int oldPos, final int newPos,
       final int diceRoll) {
+    if (oldPos == GamePiece.IN_HOME) {
+      return true;
+    }
     if (isOccupied(oldPos, newPos)) {
       return true;
     }
@@ -351,12 +362,18 @@ public class LudoGame {
       return false;
     }
 
-    if ((oldPos + diceRoll) % MAIN_BOARD_SIZE != newPos) {
+    if (oldPos < SAFE_POSITION_0[Player.RED]
+        && (oldPos + diceRoll) % MAIN_BOARD_SIZE != newPos) {
+      return true;
+    }
+
+    if (oldPos >= SAFE_POSITION_0[Player.RED] && oldPos + diceRoll != newPos) {
       return true;
     }
 
     // piece cannot move passed home position
-    if (oldPos + diceRoll >= SAFE_POSITION_0[currentPlayer] + NUM_SPACES_SAFE) {
+    if (oldPos >= SAFE_POSITION_0[currentPlayer] && oldPos
+        + diceRoll > SAFE_POSITION_0[currentPlayer] + NUM_SPACES_SAFE) {
       return true;
     }
 

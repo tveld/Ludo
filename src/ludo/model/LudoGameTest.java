@@ -267,13 +267,213 @@ public class LudoGameTest {
     assertTrue(lgame.move(LudoGame.PIECE_ENTER_POSITIONS[Player.YELLOW], 13));
 
   }
-  
+
   @Test
-  public void testMovePassedHome() {
-	  lgame.move(LudoGame.START_POSITIONS[Player.RED], 6);
-	  lgame.move(LudoGame.PIECE_ENTER_POSITIONS[Player.RED], 50);
-	  lgame.move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 3);
-	  assertFalse(lgame.move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 6));
+  public void testRedMovePassedHome() {
+    assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.RED], 6));
+    assertTrue(lgame.move(LudoGame.PIECE_ENTER_POSITIONS[Player.RED], 50));
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 3));
+    assertFalse(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 6));
+  }
+
+  @Test
+  public void testBlueMovePassedHome() {
+    lgame.nextPlayerTurn();
+    assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.BLUE], 6));
+    assertTrue(lgame.move(LudoGame.PIECE_ENTER_POSITIONS[Player.BLUE], 50));
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 3));
+    assertFalse(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 6));
+  }
+
+  @Test
+  public void testGreenMovePassedHome() {
+    lgame.nextPlayerTurn();
+    lgame.nextPlayerTurn();
+    assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.GREEN], 6));
+    assertTrue(lgame.move(LudoGame.PIECE_ENTER_POSITIONS[Player.GREEN], 50));
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 3));
+    assertFalse(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 6));
+  }
+
+  @Test
+  public void testYellowMovePassedHome() {
+    lgame.nextPlayerTurn();
+    lgame.nextPlayerTurn();
+    lgame.nextPlayerTurn();
+    assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.YELLOW], 6));
+    assertTrue(lgame.move(LudoGame.PIECE_ENTER_POSITIONS[Player.YELLOW], 50));
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 3));
+    assertFalse(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 6));
+  }
+
+  @Test
+  public void testMoveRed() {
+    assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.RED], 6));
+    while (lgame.getPlayer(Player.RED).getGamePiece(0)
+        .getPosition() != LudoGame.SAFE_ADJACENT_POSITIONS[Player.RED]) {
+      assertTrue(lgame
+          .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+    }
+    
+    while (lgame.getPlayer(Player.RED).getGamePiece(0)
+        .getPosition() < LudoGame.SAFE_ADJACENT_POSITIONS[Player.RED]) {
+      assertTrue(lgame
+          .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+    }
+
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition() == 52);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition() == 53);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition() == 54);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition() == 55);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition() == 56);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.RED).getGamePiece(0)
+        .getPosition() == GamePiece.IN_HOME);
+    assertFalse(lgame
+        .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
+  }
+
+  @Test
+  public void testMoveBlue() {
+    lgame.nextPlayerTurn();
+    assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.BLUE], 6));
+    while (lgame.getPlayer(Player.BLUE).getGamePiece(0)
+        .getPosition() != LudoGame.SAFE_ADJACENT_POSITIONS[Player.BLUE]) {
+      assertTrue(lgame
+          .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 1));
+    }
+
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition() == 57);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition() == 58);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition() == 59);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition() == 60);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition() == 61);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.BLUE).getGamePiece(0)
+        .getPosition() == GamePiece.IN_HOME);
+    assertFalse(lgame
+        .move(lgame.getPlayer(Player.BLUE).getGamePiece(0).getPosition(), 1));
+
+  }
+
+  @Test
+  public void testMoveGreen() {
+    lgame.nextPlayerTurn();
+    lgame.nextPlayerTurn();
+    assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.GREEN], 6));
+    while (lgame.getPlayer(Player.GREEN).getGamePiece(0)
+        .getPosition() != LudoGame.SAFE_ADJACENT_POSITIONS[Player.GREEN]) {
+      assertTrue(lgame
+          .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+    }
+    
+    while (lgame.getPlayer(Player.GREEN).getGamePiece(0)
+        .getPosition() < LudoGame.SAFE_ADJACENT_POSITIONS[Player.GREEN]) {
+      assertTrue(lgame
+          .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+    }
+
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+    assertTrue("Position is "+ lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(),
+        lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition() == 62);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition() == 63);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition() == 64);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition() == 65);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition() == 66);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.GREEN).getGamePiece(0)
+        .getPosition() == GamePiece.IN_HOME);
+    assertFalse(lgame
+        .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+  }
+
+  @Test
+  public void testMoveYellow() {
+    lgame.nextPlayerTurn();
+    lgame.nextPlayerTurn();
+    lgame.nextPlayerTurn();
+    assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.YELLOW], 6));
+    while (lgame.getPlayer(Player.YELLOW).getGamePiece(0)
+        .getPosition() != LudoGame.SAFE_ADJACENT_POSITIONS[Player.YELLOW]) {
+      assertTrue(lgame
+          .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
+    }
+
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
+    assertTrue("Position is "+ lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(),
+        lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition() == 67);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition() == 68);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition() == 69);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition() == 70);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
+    assertTrue(
+        lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition() == 71);
+    assertTrue(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
+    assertTrue(lgame.getPlayer(Player.YELLOW).getGamePiece(0)
+        .getPosition() == GamePiece.IN_HOME);
+    assertFalse(lgame
+        .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
   }
 
   @Test

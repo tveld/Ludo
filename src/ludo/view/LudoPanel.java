@@ -69,13 +69,15 @@ public class LudoPanel extends JPanel {
 
   private static final long serialVersionUID = 1L;
   private static final int NUM_PIECES = 4;
+  private static final int DICE_START_VALUE = 6;
   private static final int[] PLAYERS =
       new int[] { Player.RED, Player.BLUE, Player.GREEN, Player.YELLOW };
-  private static final String[] PLAYER_NAMES = 
-		  new String[] { "Red", "Blue", "Green", "Yellow" };  // player names
-  private static final int NUMBER_PLAYERS = 4;  //num of players
+  private static final String[] PLAYER_NAMES =
+      new String[] { "Red", "Blue", "Green", "Yellow" }; // player names
+  private static final int NUMBER_PLAYERS = 4; // num of players
   private static final int BORDER_SIZE = 10;
   private static final int GUI_MOD = 200;
+  private static final int NUM_ROWS_GRID = 3;
   private Mapper mapper;
   private static JButton[][] board;
   private JButton passButton;
@@ -85,15 +87,16 @@ public class LudoPanel extends JPanel {
   private JLabel currentPlayerLabel, currentDiceRollLabel, errorMessageLabel;
   private JFrame gui;
   private ButtonListener buttonListener = new ButtonListener();
-  private LudoGame ludoGame;  
+  private LudoGame ludoGame;
   private boolean invalidMove = false;
   private boolean goodMove = true;
-  private int diceRoll = 6;
-  private boolean[] firstMove = {true, true, true, true};
+  private int diceRoll;
+  private boolean[] firstMove = { true, true, true, true };
 
   public LudoPanel() {
+    diceRoll = DICE_START_VALUE;
     ludoGame = new LudoGame();
-    
+
     gui = new JFrame("Ludo");
     gui.setVisible(true);
     gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -134,7 +137,7 @@ public class LudoPanel extends JPanel {
       bottomHome[i].setOpaque(true);
     }
 
-    JPanel labelContainer = new JPanel(new GridLayout(3, 1));
+    JPanel labelContainer = new JPanel(new GridLayout(NUM_ROWS_GRID, 1));
     errorMessageLabel = new JLabel();
     currentDiceRollLabel = new JLabel();
     currentPlayerLabel = new JLabel();
@@ -256,60 +259,51 @@ public class LudoPanel extends JPanel {
   }
 
   private class ButtonListener implements ActionListener {
-    
-    GamePiece piece;
-    Position pos;
-    
-    public void actionPerformed(ActionEvent e) {
+
+    public void actionPerformed(final ActionEvent e) {
       int currentPlayer = ludoGame.getCurrentPlayer();
-      
-      
-      
+
       // pass: next player, roll dice, display board
-      if(e.getSource() == passButton){
+      if (e.getSource() == passButton) {
         ludoGame.nextPlayerTurn();
         diceRoll = ludoGame.rollDice();
         invalidMove = false;
         displayBoard(ludoGame);
-        
-      // other button is pressed
+
+        // other button is pressed
       } else {
-        
-      	for (int x : PLAYERS) {
-      	  for (int i = 0; i < NUM_PIECES; i++) {
-      	        
-      	        piece = ludoGame.getPlayer(x).getGamePiece(i);
-      	        pos = mapper.getPositionMapping(piece.getPosition() );
-      	        
-      	    	  if(e.getSource() == board[pos.getPositionX()][pos.getPositionY()]){
-      	   
-      	    	     goodMove = ludoGame.move(mapper.getIndexMapping(pos.getPositionY(), pos.getPositionX()), diceRoll);
-      	    	     
-      	    	     // move complete: next player, roll dice, display board
-      	    	     if(goodMove){
-      	    	       invalidMove = false;
-      	    	       ludoGame.nextPlayerTurn();
-      	    	       if (firstMove[ludoGame.getCurrentPlayer()]) {
-      	    	         diceRoll = 6;
-      	    	       }
-      	    	       else {
-      	    	         diceRoll = ludoGame.rollDice();
-      	    	       }
-      	    	       displayBoard(ludoGame);
-      	    	       firstMove[currentPlayer] = false;
-      	    	     // set invalid to true, display board
-      	    	     } else {
-      	    	       invalidMove = true;
-      	    	       displayBoard(ludoGame);
-      	    	     }
-      	    	     displayBoard(ludoGame);
-      	    	      	    	    
-      	        }
-      	    		  
-      	      }
-      	      
-      	}
+        for (int x : PLAYERS) {
+          for (int i = 0; i < NUM_PIECES; i++) {
+            GamePiece piece = ludoGame.getPlayer(x).getGamePiece(i);
+            Position pos = mapper.getPositionMapping(piece.getPosition());
+
+            if (e.getSource() == board[pos.getPositionY()][pos.getPositionX()]) {
+              System.out.println(pos.getPositionX() + " " + pos.getPositionY());
+              goodMove =
+                  ludoGame.move(mapper.getIndexMapping(pos.getPositionY(),
+                      pos.getPositionX()), diceRoll);
+
+              // move complete: next player, roll dice, display board
+              if (goodMove) {
+                invalidMove = false;
+                ludoGame.nextPlayerTurn();
+                if (firstMove[ludoGame.getCurrentPlayer()]) {
+                  diceRoll = DICE_START_VALUE;
+                } else {
+                  diceRoll = ludoGame.rollDice();
+                }
+                displayBoard(ludoGame);
+                firstMove[currentPlayer] = false;
+                // set invalid to true, display board
+              } else {
+                invalidMove = true;
+                displayBoard(ludoGame);
+              }
+            }
+          }
+        } 
       }
+      displayBoard(ludoGame);
     }
   }
 }
