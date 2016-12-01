@@ -278,7 +278,6 @@ public class LudoPanel extends JPanel {
             Position pos = mapper.getPositionMapping(piece.getPosition());
 
             if (e.getSource() == board[pos.getPositionY()][pos.getPositionX()]) {
-              System.out.println(pos.getPositionX() + " " + pos.getPositionY());
               goodMove =
                   ludoGame.move(mapper.getIndexMapping(pos.getPositionY(),
                       pos.getPositionX()), diceRoll);

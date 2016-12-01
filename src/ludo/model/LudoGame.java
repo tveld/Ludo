@@ -223,7 +223,9 @@ public class LudoGame {
       newPos = moveSafeSpots(oldPos, diceRoll);
       GamePiece movePiece = board[oldPos].getGamePiece();
       board[oldPos].setGamePiece(null);
-      if (newPos != GamePiece.IN_HOME) {
+      if (newPos == SAFE_POSITION_0[currentPlayer] + NUM_SPACES_SAFE) {
+        movePiece.setPosition(GamePiece.IN_HOME);
+      } else {
         board[newPos].setGamePiece(movePiece);
       }
 
