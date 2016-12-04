@@ -298,8 +298,10 @@ public class LudoPanel extends JPanel {
         if (tempPiece.getPosition() == GamePiece.IN_HOME) {
           if (x == Player.RED || x == Player.BLUE) {
             topHome[HOME_POSITIONS[x] + i].setIcon(tempPiece.getIcon());
+          } else if (x == Player.GREEN){
+            bottomHome[HOME_POSITIONS[x+1] + i].setIcon(tempPiece.getIcon());
           } else {
-            bottomHome[HOME_POSITIONS[x] + i].setIcon(tempPiece.getIcon());
+            bottomHome[HOME_POSITIONS[x-1] + i].setIcon(tempPiece.getIcon());
           }
         } else {
           board[mapper.getPositionMapping(tempPiece.getPosition())
