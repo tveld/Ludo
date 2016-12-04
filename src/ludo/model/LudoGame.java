@@ -199,7 +199,8 @@ public class LudoGame {
    * @return True if the move was successful, false if it failed
    */
   public final boolean move(final int oldPos, final int diceRoll) {
-    if (oldPos != GamePiece.IN_HOME && board[oldPos].getGamePiece().getPlayer() != currentPlayer) {
+    if (oldPos != GamePiece.IN_HOME
+        && board[oldPos].getGamePiece().getPlayer() != currentPlayer) {
       return false;
     }
     int newPos = (oldPos + diceRoll) % MAIN_BOARD_SIZE;
@@ -252,7 +253,8 @@ public class LudoGame {
     if (!cantMove(oldPos, newPos, diceRoll)) {
       if (board[newPos].getGamePiece() != null) {
         GamePiece atNew = board[newPos].getGamePiece();
-        board[START_POSITIONS[atNew.getPlayer()] + atNew.getPieceNumber()].setGamePiece(atNew);
+        board[START_POSITIONS[atNew.getPlayer()] + atNew.getPieceNumber()]
+            .setGamePiece(atNew);
       }
       return true;
     } else {
@@ -318,9 +320,9 @@ public class LudoGame {
         dr -= SAFE_ADJACENT_POSITIONS[currentPlayer] - oldPos;
         newPos = SAFE_POSITION_0[currentPlayer] + dr - 1;
       }
-    } 
-    
-    if(board[newPos].getGamePiece() != null) {
+    }
+
+    if (board[newPos].getGamePiece() != null) {
       newPos = -1;
     }
     return newPos;

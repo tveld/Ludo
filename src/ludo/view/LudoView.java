@@ -53,7 +53,9 @@ public class LudoView {
           "**", "  ", "**" },
       { "YY", "**", "**", "**", "**", "**", "  ", "  ", "  ", "**", "**", "**",
           "**", "**", "GG" } };
-
+  /**
+   * An instance of the mapper class.
+   */
   private Mapper mapper;
 
   /**

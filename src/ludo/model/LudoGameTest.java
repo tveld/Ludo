@@ -322,7 +322,7 @@ public class LudoGameTest {
       assertTrue(lgame
           .move(lgame.getPlayer(Player.RED).getGamePiece(0).getPosition(), 1));
     }
-    
+
     while (lgame.getPlayer(Player.RED).getGamePiece(0)
         .getPosition() < LudoGame.SAFE_ADJACENT_POSITIONS[Player.RED]) {
       assertTrue(lgame
@@ -398,19 +398,21 @@ public class LudoGameTest {
     assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.GREEN], 6));
     while (lgame.getPlayer(Player.GREEN).getGamePiece(0)
         .getPosition() != LudoGame.SAFE_ADJACENT_POSITIONS[Player.GREEN]) {
-      assertTrue(lgame
-          .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+      assertTrue(lgame.move(
+          lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
     }
-    
+
     while (lgame.getPlayer(Player.GREEN).getGamePiece(0)
         .getPosition() < LudoGame.SAFE_ADJACENT_POSITIONS[Player.GREEN]) {
-      assertTrue(lgame
-          .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
+      assertTrue(lgame.move(
+          lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
     }
 
     assertTrue(lgame
         .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
-    assertTrue("Position is "+ lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(),
+    assertTrue(
+        "Position is "
+            + lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(),
         lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition() == 62);
     assertTrue(lgame
         .move(lgame.getPlayer(Player.GREEN).getGamePiece(0).getPosition(), 1));
@@ -444,13 +446,15 @@ public class LudoGameTest {
     assertTrue(lgame.move(LudoGame.START_POSITIONS[Player.YELLOW], 6));
     while (lgame.getPlayer(Player.YELLOW).getGamePiece(0)
         .getPosition() != LudoGame.SAFE_ADJACENT_POSITIONS[Player.YELLOW]) {
-      assertTrue(lgame
-          .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
+      assertTrue(lgame.move(
+          lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
     }
 
     assertTrue(lgame
         .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));
-    assertTrue("Position is "+ lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(),
+    assertTrue(
+        "Position is "
+            + lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(),
         lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition() == 67);
     assertTrue(lgame
         .move(lgame.getPlayer(Player.YELLOW).getGamePiece(0).getPosition(), 1));

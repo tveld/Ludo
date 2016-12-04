@@ -15,7 +15,8 @@ public class BoardSquareTest {
 
   @Before
   public void init() {
-    testBoardSquare = new BoardSquare(initSquareType, initPlayersAllowed, initPosition);
+    testBoardSquare =
+        new BoardSquare(initSquareType, initPlayersAllowed, initPosition);
   }
 
   @Test
@@ -33,7 +34,8 @@ public class BoardSquareTest {
     int expectedPlayersAllowed = Player.GREEN;
     int expectedPosition = 2;
 
-    testBoardSquare.setBoardSquare(expectedSquareType, expectedPlayersAllowed, expectedPosition);
+    testBoardSquare.setBoardSquare(expectedSquareType, expectedPlayersAllowed,
+        expectedPosition);
     assertEquals(expectedSquareType, testBoardSquare.getSquareType());
     assertEquals(expectedPlayersAllowed, testBoardSquare.getPlayersAllowed());
     assertEquals(expectedPosition, testBoardSquare.getPosition());

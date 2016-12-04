@@ -18,23 +18,56 @@ import ludo.model.GamePiece;
 import ludo.model.LudoGame;
 import ludo.model.Player;
 
+/**
+ * This class creates and displays the game. It also contains the control logic.
+ * 
+ * @author Katie Mulder
+ *
+ */
 public class LudoPanel extends JPanel {
   /**
    * A constant representing the size of a board size.
    */
   private static final int BOARD_SIZE = 15;
+  /**
+   * The size to display a button as.
+   */
   private static final int BUTTON_SIZE = 65;
+  /**
+   * The size to display the GUI as.
+   */
   private static final int GUI_SIZE = 600;
-
+  /**
+   * A color constant for red.
+   */
   private static final Color RED = Color.RED;
+  /**
+   * A color constant for blue.
+   */
   private static final Color BLUE = Color.BLUE;
+  /**
+   * A color constant for green.
+   */
   private static final Color GREEN = Color.GREEN;
+  /**
+   * A color constant for yellow.
+   */
   private static final Color YELLOW = Color.YELLOW;
+  /**
+   * A color constant for white.
+   */
   private static final Color WHITE = Color.WHITE;
-  private static final Color GRAY = Color.GRAY;
-
+  /**
+   * A color constant for light gray.
+   */
+  private static final Color GRAY = Color.LIGHT_GRAY;
+  /**
+   * A constant holding the indexes of the home spaces.
+   */
   private static final int[] HOME_POSITIONS = new int[] { 0, 11, 0, 11 };
-
+  /**
+   * A 2d array holding the coloring of the board squares.
+   */
   private static final Color[][] BOARD_COLORS = new Color[][] {
       { RED, RED, RED, RED, RED, RED, WHITE, WHITE, WHITE, BLUE, BLUE, BLUE,
           BLUE, BLUE, BLUE },
@@ -68,31 +101,91 @@ public class LudoPanel extends JPanel {
           GREEN, GREEN, GREEN, GREEN, GREEN, GREEN } };
 
   private static final long serialVersionUID = 1L;
+  /**
+   * The number of pieces each player has.
+   */
   private static final int NUM_PIECES = 4;
+  /**
+   * The initial value of the dice when implementing the fast start logic.
+   */
   private static final int DICE_START_VALUE = 6;
+  /**
+   * An array holding the player numbers.
+   */
   private static final int[] PLAYERS =
       new int[] { Player.RED, Player.BLUE, Player.GREEN, Player.YELLOW };
-  private static final String[] PLAYER_NAMES =
-      new String[] { "Red", "Blue", "Green", "Yellow" }; // player names
-  private static final int NUMBER_PLAYERS = 4; // num of players
+  /**
+   * The size of the empty borders.
+   */
   private static final int BORDER_SIZE = 10;
+  /**
+   * The amount to add lengthwise to the GUI.
+   */
   private static final int GUI_MOD = 200;
+  /**
+   * The number of rows in the grid.
+   */
   private static final int NUM_ROWS_GRID = 3;
+  /**
+   * An instance of the mapper class.
+   */
   private Mapper mapper;
+  /**
+   * The 2d array of JButtons representing the board.
+   */
   private static JButton[][] board;
+  /**
+   * The JButton allowing a player to pass on a turn.
+   */
   private JButton passButton;
+  /**
+   * The array of spaces to display the pieces in home.
+   */
   private JButton[] topHome;
+  /**
+   * The array of spaces to display the pieces in home.
+   */
   private JButton[] bottomHome;
+  /**
+   * The panel to hold the board buttons.
+   */
   private JPanel boardPanel;
+  /**
+   * The labels holding the messages to the players.
+   */
   private JLabel currentPlayerLabel, currentDiceRollLabel, errorMessageLabel;
+  /**
+   * The JFrame that holds the GUI.
+   */
   private JFrame gui;
+  /**
+   * The listener that triggers events.
+   */
   private ButtonListener buttonListener = new ButtonListener();
+  /**
+   * The instance of the game.
+   */
   private LudoGame ludoGame;
+  /**
+   * A boolean representing if the error message should be displayed.
+   */
   private boolean invalidMove = false;
+  /**
+   * A boolean indicating whether the attempted move was valid.
+   */
   private boolean goodMove = true;
+  /**
+   * The current dice roll.
+   */
   private int diceRoll;
+  /**
+   * A boolean array indicating whether the player has moved in the game.
+   */
   private boolean[] firstMove = { true, true, true, true };
 
+  /**
+   * The constructor for a LudoPanel.
+   */
   public LudoPanel() {
     diceRoll = DICE_START_VALUE;
     ludoGame = new LudoGame();
@@ -258,8 +351,18 @@ public class LudoPanel extends JPanel {
     }
   }
 
+  /**
+   * An inner class that handles the action events in the GUI.
+   * 
+   * @author Katie Mulder
+   */
   private class ButtonListener implements ActionListener {
 
+    /**
+     * The method triggered when a button is clicked.
+     * 
+     * @param e The event that triggered the method.
+     */
     public void actionPerformed(final ActionEvent e) {
       int currentPlayer = ludoGame.getCurrentPlayer();
 
@@ -275,12 +378,13 @@ public class LudoPanel extends JPanel {
         for (int x : PLAYERS) {
           for (int i = 0; i < NUM_PIECES; i++) {
             GamePiece piece = ludoGame.getPlayer(x).getGamePiece(i);
-            if(piece.getPosition() == GamePiece.IN_HOME){
+            if (piece.getPosition() == GamePiece.IN_HOME) {
               break;
             }
             Position pos = mapper.getPositionMapping(piece.getPosition());
 
-            if (e.getSource() == board[pos.getPositionY()][pos.getPositionX()]) {
+            if (e
+                .getSource() == board[pos.getPositionY()][pos.getPositionX()]) {
               goodMove =
                   ludoGame.move(mapper.getIndexMapping(pos.getPositionY(),
                       pos.getPositionX()), diceRoll);
@@ -303,7 +407,7 @@ public class LudoPanel extends JPanel {
               }
             }
           }
-        } 
+        }
       }
       displayBoard(ludoGame);
     }

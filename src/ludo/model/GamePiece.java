@@ -103,6 +103,11 @@ public class GamePiece {
     this.position = paramPosition;
   }
 
+  /**
+   * The getter for icon.
+   * 
+   * @return The game piece's icon
+   */
   public final ImageIcon getIcon() {
     return icon;
   }

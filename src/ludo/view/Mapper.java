@@ -2,6 +2,13 @@ package ludo.view;
 
 import ludo.model.GamePiece;
 
+/**
+ * A class that handles the conversion between the logical model and the display
+ * model.
+ * 
+ * @author Katie Mulder
+ *
+ */
 public class Mapper {
   /**
    * A constant representing the board array size.
@@ -64,6 +71,9 @@ public class Mapper {
    */
   private int[][] indexMappings;
 
+  /**
+   * A constructor for the mapper.
+   */
   public Mapper() {
     positionMappings = new Position[SINGLE_ARRAY_SIZE];
     indexMappings = new int[BOARD_SIZE][BOARD_SIZE];
