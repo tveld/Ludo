@@ -379,7 +379,7 @@ public class LudoPanel extends JPanel {
           for (int i = 0; i < NUM_PIECES; i++) {
             GamePiece piece = ludoGame.getPlayer(x).getGamePiece(i);
             if (piece.getPosition() == GamePiece.IN_HOME) {
-              break;
+              continue;
             }
             Position pos = mapper.getPositionMapping(piece.getPosition());
 
