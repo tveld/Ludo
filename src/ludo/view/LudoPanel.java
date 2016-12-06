@@ -133,7 +133,7 @@ public class LudoPanel extends JPanel {
   /**
    * The 2d array of JButtons representing the board.
    */
-  private static JButton[][] board;
+  private JButton[][] board;
   /**
    * The JButton allowing a player to pass on a turn.
    */
